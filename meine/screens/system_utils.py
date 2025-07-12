@@ -12,15 +12,14 @@ from meine.widgets.system_widget_provider import SystemWidgetProvider
 
     
 system_utils_functions = [
-    ("system_info", 1),         
-    ("cpu_usage", 2),           
-    ("memory_info", 3),         
-    ("disk_details", 5),        
-    ("network_interfaces", 7),  
-    ("ip_info", 8),             
-    ("battery_status", 9),      
-    ("current_user", 10),       
-    ("environment_vars", 14),   
+    ("System Overview", 1),         
+    ("CPU Information", 2),           
+    ("RAM Usage", 3),         
+    ("Disk Storage", 5),        
+    ("Network Configuration", 8),             
+    ("Battery Status", 9),      
+    ("User Details", 10),       
+    ("Environment Variables", 14),   
 
 ]
 

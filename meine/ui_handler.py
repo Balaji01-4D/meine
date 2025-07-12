@@ -17,7 +17,7 @@ d: dict[str, Pattern] = {
     "compress": re.compile(r"""(z|uz|zip|tar|gz|7z|unzip)\s+(.+)"""),
 }
 
-files = File(get_theme_colors())
+files = File()
 zips = Zip()
 
 
