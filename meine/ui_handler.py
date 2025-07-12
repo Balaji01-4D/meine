@@ -4,24 +4,20 @@ from re import Match, Pattern
 
 from rich.table import Table
 
-from meine.Actions import File, System, Zip
+from meine.Actions import File, Zip
 from meine.exceptions import InfoNotify
+from meine.theme_manager import get_theme_colors
 
 d: dict[str, Pattern] = {
     "twopath": re.compile(r"""(c|m|mv|cp|copy|move)\s+(.+)\s+(?:to)\s+(.+)"""),
     "onepath": re.compile(r"""(d|rm|r|del|mk|mkdir|mkd|create|delete|clr|show)\s+(.+)"""),
     "rename": re.compile(r"(rename|rn)\s+(.+)\s+(?:as|to)\s+(.+)"),
-    "system": re.compile(
-        r"(battery|bt|charge|user|me|env|ip|cpu|disk|ram|net|time|system|sys|cpu|disk|storage|net|process)\s?(\s[^\s]+)?"
-    ),
     "search_text": re.compile(r"""(find|where|search)\s+["'](.+)["']\s+(.+)"""),
     "notepad": re.compile(r"(write|notepad|wr)\s+(.+)"),
     "compress": re.compile(r"""(z|uz|zip|tar|gz|7z|unzip)\s+(.+)"""),
-    "backup": re.compile(r"""(backup|bk)\s+(.+)"""),
 }
 
-files = File()
-systems = System()
+files = File(get_theme_colors())
 zips = Zip()
 
 
@@ -65,7 +61,7 @@ async def CLI(Command):
                 results = [await Copy(s, destination) for s in source]
                 return "\n".join(results)
             return await Copy(source, destination)
-        else:  # Handle move
+        else:  
             if isinstance(source, list):
                 results = [await Move(s, destination) for s in source]
                 return "\n".join(results)
@@ -113,35 +109,6 @@ async def CLI(Command):
         act = RegexMatch.group(1)
         extra = RegexMatch.group(2)
 
-        system_actions = {
-            "ip": systems.IP,
-            "ram": systems.ram_info,
-            "time": systems.Time,
-            "date": systems.Time,
-            "disk": systems.DiskInfo,
-            "storage": systems.DiskInfo,
-            "space": systems.DiskInfo,
-            "home": systems.HomeDir,
-            "sys": systems.SYSTEM,
-            "system": systems.SYSTEM,
-            "bt": systems.Battery,
-            "power": systems.Battery,
-            "battery": systems.Battery,
-            "net": systems.NetWork,
-            "network": systems.NetWork,
-            "env": systems.ENV,
-            "cpu": systems.CPU,
-            "usr": systems.USER,
-            "user": systems.USER,
-            "me": systems.USER,
-            "process": systems.Processes,
-            "background": systems.Processes,
-            "kill": lambda: systems.ProcessKill(extra),
-            "shutdown": lambda: systems.shutdown(extra),
-        }
-
-        if act in system_actions:
-            return await system_actions[act]()
         raise (f"[#E06C75]Unknown system action: {act}")
 
     async def handle_compress(RegexMatch: Match) -> str:
@@ -174,7 +141,7 @@ async def CLI(Command):
         else:
             raise InfoNotify("Source Not Found")
 
-    # Command-to-handler mapping
+    
     handlers = {
         "rename": handle_rename,
         "twopath": handle_two_path,
