@@ -1,7 +1,6 @@
 from textual.app import App
 
 from meine.screens.help import HelpScreen
-from meine.screens.home import HomeScreen
 from meine.screens.settings import NameGetterScreen, Settings
 from meine.screens.system_utils import SystemUtilScreen
 from meine.themes import BUILTIN_THEMES
@@ -12,6 +11,8 @@ from meine.utils.file_manager import (
     load_settings,
     initialize_user_data_files
 )
+from meine.theme_manager import register_theme_provider
+
 initialize_user_data_files()
 
 
@@ -32,9 +33,13 @@ class MeineAI(App[None]):
         self.more_themes = BUILTIN_THEMES
 
     async def on_mount(self):
+        register_theme_provider(self)
         self.SETTINGS = load_settings()
         self.HISTORY = load_history()
+        
+        from meine.screens.home import HomeScreen
         await self.push_screen(HomeScreen(id=HOME_SCREEN_ID))
+        
         for theme in BUILTIN_THEMES.values():
             self.register_theme(theme)
         self.theme = self.SETTINGS["app_theme"]
@@ -99,13 +104,37 @@ class MeineAI(App[None]):
         self.push_screen(NameGetterScreen(title, callback))
 
 
+    def get_theme_colors(self):
 
-app = MeineAI()
+        _theme = self.current_theme
+
+        return {
+            "primary": _theme.primary,
+            "secondary": _theme.secondary,
+            "warning": _theme.warning,
+            "error": _theme.error,
+            "success": _theme.success,
+            "accent": _theme.accent,
+            "foreground": _theme.foreground,
+            "background": _theme.background,
+            "surface": _theme.surface,
+            "panel": _theme.panel,
+            "boost": _theme.boost,
+        }
+
+
+
+_app_instance = None
+
+def get_app():
+    global _app_instance
+    if _app_instance is None:
+        _app_instance = MeineAI()
+    return _app_instance
 
 def run():
+    app = get_app()
     app.run()
-
-
 
 if __name__ == '__main__':
     run()
