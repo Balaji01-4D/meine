@@ -1,53 +1,53 @@
 from collections.abc import Callable
 from textual.widgets import Static
 from rich.panel import Panel
+from rich.errors import MissingStyle
 
 from meine.Actions import System
-
-
 
 async def default():
     return ""
 
-sys = System()
-
-system_utils_callable_map = {
-    0: default, 
-    1: sys.SYSTEM,
-    2: sys.CPU,
-    3: sys.ram_info,
-    4: sys.DiskSpace,
-    5: sys.DiskInfo,
-    6: sys.Processes,
-    7: sys.NetWork,
-    8: sys.IP,
-    9: sys.Battery,
-    10: sys.USER,
-    11: sys.Time,
-    12: sys.HomeDir,
-    13: sys.GetCurrentDir,
-    14: sys.ENV,
-    15: sys.Info,
-    16: sys.ProcessKill,
-    17: sys.Reboot,
-    18: sys.ShutDown,
-}
 
 
 class SystemWidgetProvider(Static):
 
     RUNNING_FUNCTION: Callable= None
-
+    system_utils_callable_map = None
+    
     def __init__(self, function_id = 0, content = "", *, expand = False, shrink = False, markup = True, name = None, id = None, classes = None, disabled = False):
         super().__init__(content, expand=expand, shrink=shrink, markup=markup, name=name, id=id, classes=classes, disabled=disabled)
-        self.RUNNING_FUNCTION = self.get_function_by_id(function_id)
+
+    def _on_mount(self, event):
+        self.sys = System(self.app.get_theme_colors())
+
+        self.system_utils_callable_map = {
+            0: default, 
+            1: self.sys.SYSTEM,
+            2: self.sys.CPU,
+            3: self.sys.ram_info,
+            5: self.sys.DiskInfo,
+            7: self.sys.NetWork,
+            8: self.sys.IP,
+            9: self.sys.Battery,
+            10: self.sys.USER,
+            14: self.sys.ENV,
+
+        }
+
+        return super()._on_mount(event)
 
     
     def get_function_by_id(self, id: int):
-        return system_utils_callable_map[id]
+        return self.system_utils_callable_map[id]
     
     async def update_widget(self):
-        self.update(await self.RUNNING_FUNCTION())
+        result = await self.RUNNING_FUNCTION()
+
+        if (isinstance(result, Panel)):
+            self.update(result)
+        else:
+            self.update(Panel(result, border_style=self.app.current_theme.primary))
 
 
     def set_function(self, id):
