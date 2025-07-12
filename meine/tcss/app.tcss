@@ -209,3 +209,23 @@ MeineTextAreaScreen > Container > Static{
     color: $primary;
     text-style: bold;
 }
+
+
+SystemUtilScreen {
+
+  SystemWidgetProvider{
+    background: $surface;
+  }
+
+  Select {
+      width: 60;
+      margin: 2;
+
+      &:focus > SelectCurrent {
+          /* border: tall #43548b; */
+          background-tint: transparent;
+          background: #151729;
+      }
+  }
+
+}

@@ -159,7 +159,7 @@ class System:
         theme = get_theme_colors()
         return f"[{theme['foreground']}]Home Directory :  [{theme['accent']}]{Path.home()}"
 
-    async def RAMInfo(self) -> Panel:
+    async def ram_info(self) -> Panel:
 
         theme = get_theme_colors()
         primary = theme['primary']
@@ -192,7 +192,6 @@ class System:
 
         return panel_group
 
-    # final
     async def SYSTEM(self) -> Panel:
         theme = get_theme_colors()
         system_info = [
@@ -217,7 +216,7 @@ class System:
         for label, value in system_info:
             systemtable.add_row(label, value, style=theme['foreground'])
 
-        rampanel = await self.RAMInfo()
+        rampanel = await self.ram_info()
         gp = Group(systemtable, rampanel)
 
         return gp

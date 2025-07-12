@@ -3,6 +3,7 @@ from textual.app import App
 from meine.screens.help import HelpScreen
 from meine.screens.home import HomeScreen
 from meine.screens.settings import NameGetterScreen, Settings
+from meine.screens.system_utils import SystemUtilScreen
 from meine.themes import BUILTIN_THEMES
 from meine.utils.file_manager import (
     save_history,
@@ -17,6 +18,7 @@ initialize_user_data_files()
 HOME_SCREEN_ID = "home-screen"
 HELP_SCREEN_ID = "help-screen"
 SETTINGS_SCREEN_ID = "settings-screen"
+SYSTEM_UTILS_SCREEN_ID = "system-util-screen"
 CUSTOM_PATH_COMMAND = "Add custom path expansion"
 CUSTOM_PATH_HELP = "Add a custom path expansion"
 
@@ -71,6 +73,14 @@ class MeineAI(App[None]):
             self.switch_screen(Settings(id=SETTINGS_SCREEN_ID))
         else:
             self.push_screen(Settings(id=SETTINGS_SCREEN_ID))
+
+    def key_ctrl_u(self):
+        if self.screen.id == SYSTEM_UTILS_SCREEN_ID:
+            self.pop_screen()
+        else:
+            self.push_screen(SystemUtilScreen(id=SYSTEM_UTILS_SCREEN_ID))
+
+
 
     def key_escape(self):
         """

@@ -115,7 +115,7 @@ async def CLI(Command):
 
         system_actions = {
             "ip": systems.IP,
-            "ram": systems.RAMInfo,
+            "ram": systems.ram_info,
             "time": systems.Time,
             "date": systems.Time,
             "disk": systems.DiskInfo,

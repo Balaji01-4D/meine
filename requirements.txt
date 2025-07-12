@@ -18,7 +18,7 @@ pyppmd==1.1.1
 pyzstd==0.17.0
 rich==14.0.0
 texttable==1.7.0
-textual==3.2.0
+textual==3.7.1
 typing_extensions==4.13.2
 uc-micro-py==1.0.3
 xdialog==1.2.0.1

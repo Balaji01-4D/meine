@@ -9,3 +9,5 @@ venv/
 .vscode/
 .idea/
 run.py
+.vscode
+/run.py
