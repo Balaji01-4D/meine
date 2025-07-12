@@ -11,30 +11,16 @@ from rich.text import Text
 
 from meine.exceptions import InfoNotify
 from .Myrequest import AlreadyExist
+from .app_theme import get_theme_colors
 
 
 class File:
     
-    def __init__(self, theme=None):
-        """
-        Initialize File class with theme colors.
-        
-        Args:
-            theme (dict, optional): Dictionary containing theme colors with keys:
-                'primary', 'accent', 'foreground', 'error', etc.
-        """
-        
-        self.theme = theme or {
-            'primary': 'cyan',
-            'accent': 'green',
-            'foreground': 'white',
-            'error': 'red'
-        }
-        
     def safe_style(self, style_name):
         """Safely get a style from theme, with fallback to default colors if there's an error"""
         try:
-            return self.theme.get(style_name, 'white')
+            theme = get_theme_colors()
+            return theme.get(style_name, 'white')
         except Exception:
             return 'white'
             
