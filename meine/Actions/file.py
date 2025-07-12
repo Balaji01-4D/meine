@@ -11,13 +11,33 @@ from rich.text import Text
 
 from meine.exceptions import InfoNotify
 from .Myrequest import AlreadyExist
-from .app_theme import get_theme_colors
 
-
-def need_theme():
-    return get_theme_colors()
 
 class File:
+    
+    def __init__(self, theme=None):
+        """
+        Initialize File class with theme colors.
+        
+        Args:
+            theme (dict, optional): Dictionary containing theme colors with keys:
+                'primary', 'accent', 'foreground', 'error', etc.
+        """
+        
+        self.theme = theme or {
+            'primary': 'cyan',
+            'accent': 'green',
+            'foreground': 'white',
+            'error': 'red'
+        }
+        
+    def safe_style(self, style_name):
+        """Safely get a style from theme, with fallback to default colors if there's an error"""
+        try:
+            return self.theme.get(style_name, 'white')
+        except Exception:
+            return 'white'
+            
 
     async def Delete_File(self, FileName: Path) -> Coroutine[None, None, str]:
         """
@@ -36,7 +56,7 @@ class File:
             try:
                 await asyncio.to_thread(FileName.chmod, 0o744)
                 await asyncio.to_thread(FileName.unlink)
-                return f"[{need_theme()["foreground"]}]{FileName.name} Deleted Successfully."
+                return f"[{self.safe_style('foreground')}]{FileName.name} Deleted Successfully."
             except FileNotFoundError:
                 raise InfoNotify(f"File Not found")
             except PermissionError:
@@ -72,7 +92,7 @@ class File:
             raise InfoNotify(f"{Destination.name} Is Not a Valid Directory.")
         try:
             await asyncio.to_thread(sl.move, Source, Final)
-            return f"[{need_theme()["foreground"]}]{Source.name} Moved Successfully to {Destination.name}."
+            return f"[{self.safe_style('foreground')}]{Source.name} Moved Successfully to {Destination.name}."
         except PermissionError:
             raise InfoNotify("Permission Denied.")
         except Exception as e:
@@ -105,7 +125,7 @@ class File:
         if OldName.exists():
             try:
                 await asyncio.to_thread(OldName.rename, NewName)
-                return f"[{need_theme()["foreground"]}]Renamed Successfully {OldName.name} -> {NewName.name}"
+                return f"[{self.safe_style('foreground')}]Renamed Successfully {OldName.name} -> {NewName.name}"
             except PermissionError:
                 raise InfoNotify(f"Permission Denied")
             except Exception as e:
@@ -163,7 +183,7 @@ class File:
         try:
             if not Name.exists():
                 await asyncio.to_thread(Name.touch)
-                return f"[{need_theme()["foreground"]}]{Name.name} Is Created in {Name.resolve().parent} Directory"
+                return f"[{self.safe_style('foreground')}]{Name.name} Is Created in {Name.resolve().parent} Directory"
             else:
                 raise InfoNotify(f"{Name.name} Is Already in {Name.resolve().parent} Directory")
         except PermissionError:
@@ -225,7 +245,7 @@ class File:
         try:
             async with aiofiles.open(FileName, mode="w") as _:
                 pass
-            return f"[{need_theme()["foreground"]}]{FileName.name} Content Cleared Successfully"
+            return f"[{self.safe_style('foreground')}]{FileName.name} Content Cleared Successfully"
         except PermissionError:
             raise InfoNotify(f"Permission Denied for {FileName.name}")
         except Exception as e:
@@ -288,12 +308,16 @@ class File:
     async def search_items(
         self, query: str, path: str = ".", search_type: str = "both"
     ) -> Coroutine[None, None, Table | str]:
-
-        matches_table = Table(show_lines=True)
-        matches_table.add_column("Found")
-        matches_table.add_column("Type")
-        matches = []
         try:
+            foreground = self.safe_style('foreground')
+            primary = self.safe_style('primary')
+            error = self.safe_style('error')
+            
+            matches_table = Table(show_lines=True, border_style=primary)
+            matches_table.add_column("Found", style=foreground)
+            matches_table.add_column("Type", style=foreground)
+            matches = []
+            
             for root, dirs, files in os.walk(path):
                 if search_type in ("folders", "both"):
                     for folder in dirs:
@@ -308,13 +332,19 @@ class File:
                         if file.startswith(query):
                             matches.append(os.path.join(root, file))
                             matches_table.add_row(
-                                str(os.path.join(root, folder)), "File"
+                                str(os.path.join(root, file)), "File"
                             )
 
+            if not matches:
+                return Panel(f"[{error}]No matches found for '{query}'", border_style=primary)
+                
             return matches_table
+        except PermissionError:
+            return Panel(f"[{self.safe_style('error')}]Permission denied when searching for '{query}'", 
+                        border_style=self.safe_style('primary'))
         except Exception as e:
-
-            return []
+            return Panel(f"[{self.safe_style('error')}]Error searching for '{query}': {str(e)}",
+                        border_style=self.safe_style('primary'))
 
     async def Create_Folder(self, Source: Path) -> Coroutine[None, None, str]:
         """
@@ -332,7 +362,7 @@ class File:
             if Source.exists():
                 return AlreadyExist(Source.name, Source.parent)
             await asyncio.to_thread(Source.mkdir, parents=True, exist_ok=False)
-            return f"[{need_theme()["foreground"]}]{Source.name} Created Successfully at {Source.resolve().parent}"
+            return f"[{self.safe_style('foreground')}]{Source.name} Created Successfully at {Source.resolve().parent}"
         except PermissionError:
             raise InfoNotify(f"Permission Denied: Cannot Create {Source.name}")
 
@@ -370,7 +400,7 @@ class File:
                 raise InfoNotify(f"{Destination.name} Is Not a Directory")
 
             await asyncio.to_thread(sl.move, Source, Destination)
-            return f"[{need_theme()["foreground"]}]{Source.name} Moved Successfully to {Destination.resolve().name}"
+            return f"[{self.safe_style('foreground')}]{Source.name} Moved Successfully to {Destination.resolve().name}"
 
         except PermissionError:
             raise InfoNotify("Permission Denied")
@@ -406,12 +436,12 @@ class File:
 
             if Source.is_dir():
                 await asyncio.to_thread(sl.copytree, Source, Final, dirs_exist_ok=True)
-                return f"[{need_theme()["foreground"]}]{Source.name} Directory Copied Successfully to {Destination.resolve().name}"
+                return f"[{self.safe_style('foreground')}]{Source.name} Directory Copied Successfully to {Destination.resolve().name}"
 
-            # Handle copying file
+            
             elif Source.is_file():
                 await asyncio.to_thread(sl.copy2, Source, Final)
-                return f"[{need_theme()["foreground"]}]{Source.name} File Copied Successfully to {Destination.resolve().name}"
+                return f"[{self.safe_style('foreground')}]{Source.name} File Copied Successfully to {Destination.resolve().name}"
 
             else:
                 raise InfoNotify(f"Unsupported File Type: {Source.name}")
@@ -442,7 +472,7 @@ class File:
                 await asyncio.to_thread(sl.rmtree, FolderName)
             else:
                 await asyncio.to_thread(FolderName.unlink)
-            return f"[{need_theme()["foreground"]}]{FolderName.name} Deleted Successfully."
+            return f"[{self.safe_style('foreground')}]{FolderName.name} Deleted Successfully."
         except PermissionError:
             raise InfoNotify(f"Permission Denied for {FolderName.name}")
         except Exception as e:
