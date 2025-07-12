@@ -15,34 +15,19 @@ from rich.table import Table
 
 from ..exceptions import InfoNotify
 from .other import SizeHelper
+from .app_theme import get_theme_colors
 
 
 class System:
 
     os_type = platform.system()
     
-    def __init__(self, theme=None):
-        """
-        Initialize System class with theme colors.
-        
-        Args:
-            theme (dict, optional): Dictionary containing theme colors with keys:
-                'primary', 'accent', 'foreground', 'error', etc.
-        """
-        
-        self.theme = theme or {
-            'primary': 'cyan',
-            'accent': 'green',
-            'foreground': 'white',
-            'error': 'red'
-        }
-        
     def safe_style(self, style_name):
         """Safely get a style from theme, with fallback to default colors if there's an error"""
-        try:
-            return self.theme.get(style_name, 'white')
-        except Exception:
-            return 'white'
+
+        theme = get_theme_colors()
+        return theme.get(style_name, 'white')
+
 
     def ShutDown(self):
 
@@ -70,7 +55,8 @@ class System:
         date = dt.datetime.now().date()
         time = dt.datetime.now().time()
         try:
-            return f"""[{self.theme['accent']}]DATE : {date}\nTIME : {time}"""
+            theme = get_theme_colors()
+            return f"""[{theme['accent']}]DATE : {date}\nTIME : {time}"""
         except Exception as e:
             return f"DATE : {date}\nTIME : {time}"
 
@@ -80,20 +66,92 @@ class System:
     async def IP(self) -> Table:
         import socket
         try:
-            hostname_task = asyncio.to_thread(socket.gethostname)
-            hostname = await hostname_task
-
+            theme = get_theme_colors()
+            primary = theme['primary']
+            accent = theme['accent']
+            foreground = theme['foreground']
+            
+            # Gather network information concurrently
+            tasks = [
+                asyncio.to_thread(socket.gethostname),
+                asyncio.to_thread(psutil.net_if_addrs),
+                asyncio.to_thread(socket.getfqdn)
+            ]
+            
+            results = await asyncio.gather(*tasks)
+            hostname = results[0]
+            net_if_addrs = results[1]
+            fqdn = results[2]
+            
+            # Get local IP address for the hostname
             ip_address_task = asyncio.to_thread(socket.gethostbyname, hostname)
             ip_address = await ip_address_task
-
+            
+            # Create a more comprehensive network table
             net_info = Table(
                 show_header=False,
                 show_lines=True,
-                border_style=self.safe_style('primary')
+                title=f"[{accent}]Network Information",
+                border_style=primary
             )
-            net_info.add_row("Hostname", hostname, style=self.safe_style('foreground'))
-            net_info.add_row("IP Address", ip_address, style=self.safe_style('foreground'))
-
+            
+            # Basic host information
+            net_info.add_row("Hostname", hostname, style=foreground)
+            net_info.add_row("FQDN", fqdn, style=foreground)
+            net_info.add_row("Primary IP", ip_address, style=foreground)
+            
+            # Try to get public IP (if internet is available)
+            try:
+                # Find active interfaces with non-loopback addresses
+                active_interfaces = []
+                for interface, addrs in net_if_addrs.items():
+                    for addr in addrs:
+                        if addr.family == socket.AF_INET and not addr.address.startswith('127.'):
+                            active_interfaces.append((interface, addr.address))
+                            break
+                
+                if active_interfaces:
+                    net_info.add_row("", "", style=foreground)
+                    net_info.add_row(f"[{accent}]Active Interfaces", "", style=foreground)
+                    for interface, addr in active_interfaces:
+                        net_info.add_row(f"  {interface}", addr, style=foreground)
+            except Exception:
+                pass
+            
+            # Add interface address families
+            if_types = {
+                socket.AF_INET: "IPv4",
+                socket.AF_INET6: "IPv6",
+                getattr(socket, 'AF_PACKET', None): "Hardware",
+                getattr(socket, 'AF_LINK', None): "Hardware"
+            }
+            
+            # Add a summary of network interfaces by type
+            ipv4_count = 0
+            ipv6_count = 0
+            hw_count = 0
+            
+            for interface, addrs in net_if_addrs.items():
+                for addr in addrs:
+                    if addr.family == socket.AF_INET:
+                        ipv4_count += 1
+                    elif addr.family == socket.AF_INET6:
+                        ipv6_count += 1
+                    elif addr.family in [getattr(socket, 'AF_PACKET', None), getattr(socket, 'AF_LINK', None)]:
+                        hw_count += 1
+            
+            net_info.add_row("", "", style=foreground)
+            net_info.add_row(f"[{accent}]Interface Summary", "", style=foreground)
+            net_info.add_row("  IPv4 Addresses", str(ipv4_count), style=foreground)
+            net_info.add_row("  IPv6 Addresses", str(ipv6_count), style=foreground)
+            net_info.add_row("  Hardware Addresses", str(hw_count), style=foreground)
+            
+            # Add localhost information
+            localhost_info = await asyncio.to_thread(socket.gethostbyname_ex, 'localhost')
+            if localhost_info and len(localhost_info) > 2:
+                net_info.add_row("", "", style=foreground)
+                net_info.add_row(f"[{accent}]Localhost", ", ".join(localhost_info[2]), style=foreground)
+            
             return net_info
 
         except Exception as e:
@@ -213,34 +271,52 @@ class System:
             os_name = platform.system()
             
             if os_name == "Linux":
-                os_art = f"""[{accent}]
-       .--.      
-      |o_o |     
-      |:_/ |     
-     //   \\ \\    
-    (|     | )   
-    /'\\_   _/`\\  
-    \\___)=(___/  
+                os_art = rf"""[{accent}]
+         _nnnn_
+        dGGGGMMb
+       @p~qp~~qMb
+       M|@||@) M|
+       @,----.JM|
+      JS^\__/  qKL
+     dZP        qKRb
+    dZP          qKKb
+   fZP            SMMb
+   HZM            MMMM
+   FqM            MMMM
+ __| ".        |\dS"qML
+ |    `.       | `' \Zq
+_)      \.___.,|     .'
+\____   )MMMMMP|   .'
+     `-'       `--'
                 """
             elif os_name == "Windows":
-                os_art = f"""[{accent}]
-    ################
-    ################
-    ################
-    ################
-    ################
-    ################
-    ################
+                os_art = rf"""[{accent}]
+        ,.=:^^!t3Z3z.,
+       :tt:::tt333EE3
+       Et:::ztt33EEE  @Ee.,
+      ;tt:::tt333EE7 ;EEEEEEttttt33#
+     :Et:::zt333EEQ. $EEEEEttttt33QL
+     it::::tt333EEF @EEEEEEttttt33F
+    ;3=*^```"*4EEV :EEEEEEttttt33@.
+    ,.=::::it=.,   @EEEEEEtttz33QF
+   ;::::::::zt33)   "4EEEtttji3P*
+  :t::::::::tt33.Z3z..  `` ,..g.
+  i::::::::zt33F AEEEtttt::::ztF
+ ;:::::::::t33V ;EEEttttt::::t3
+ E::::::::zt33L @EEEtttt::::z3F
+*3=*^```"*4E3) ;EEEtttt:::::tZ`
+             `` :EEEEtttt::::z7
+                 "VEzjt:;;z>*`
                 """
             elif os_name == "Darwin":
-                os_art = f"""[{accent}]
-          .:'
-      __ :'__
-   .'`__`-'__``.
-  :__________.-'
-  :_________:
-   :_________`-;
-    `._.-._.'
+                os_art = rf"""[{accent}]
+                .:'
+              __ :'__
+           .'`__`-'__``.
+          :__________.-'
+          :_________:
+           :_________`-;
+            `._.-._.'
                 """
             else:
                 os_art = f"""[{accent}]
@@ -272,7 +348,7 @@ class System:
             
             
             sys_info = []
-            sys_info.append(f"[{accent}]OS:[{foreground}] {platform.system()} {platform.release()}")
+            sys_info.append(f"[{accent}]        OS:[{foreground}] {platform.system()} {platform.release()}")
             sys_info.append(f"[{accent}]Kernel:[{foreground}] {platform.version()}")
             sys_info.append(f"[{accent}]Uptime:[{foreground}] {uptime_str}")
             
@@ -332,20 +408,25 @@ class System:
                 sys_info.append(f"[{accent}]Terminal:[{foreground}] {terminal}")
             
             
-            max_info_length = max(len(line) for line in sys_info) + 20  
+            # Determine width of the ASCII art for proper alignment
+            os_art_lines = os_art.strip().split('\n')
+            art_width = max(len(line) for line in os_art_lines)
             
+            # Ensure consistent width by padding shorter lines
+            padded_art_lines = []
+            for line in os_art_lines:
+                # Right-pad each art line to have the same width
+                padded_art_lines.append(f"{line:<{art_width}}")
             
             lines = []
             
-            
-            os_art_lines = os_art.strip().split('\n')
-            
-            
-            max_lines = max(len(os_art_lines), len(sys_info))
+            # Combine art and info with consistent spacing
+            max_lines = max(len(padded_art_lines), len(sys_info))
             for i in range(max_lines):
-                art_line = os_art_lines[i] if i < len(os_art_lines) else " " * 16
+                art_line = padded_art_lines[i] if i < len(padded_art_lines) else " " * art_width
                 info_line = sys_info[i] if i < len(sys_info) else ""
-                lines.append(f"{art_line}  {info_line}")
+                # Use consistent padding between art and info text
+                lines.append(f"{art_line}    {info_line}")
             
             
             lines.insert(0, user_host)
@@ -674,32 +755,6 @@ class System:
             return "yellow"
         else:
             return self.safe_style('accent')
-
-    async def NetWork(self) -> Panel:
-        try:
-            primary = self.safe_style('primary')
-            accent = self.safe_style('accent')
-            foreground = self.safe_style('foreground')
-            
-            net_info = await asyncio.to_thread(psutil.net_if_addrs)
-
-            net = Table(
-                title="Network Information",
-                border_style=primary,
-                title_style=accent
-            )
-
-            net.add_column("Interface", no_wrap=True, header_style=accent)
-            net.add_column("Address", no_wrap=True, header_style=accent)
-            net.add_column("Family", no_wrap=True, justify="left", header_style=accent)
-
-            for interface, addresses in net_info.items():
-                for address in addresses:
-                    net.add_row(interface, address.address, address.family.name, style=foreground)
-
-            return net
-        except Exception as e:
-            return Panel(f"Error getting network information: {e}", border_style="red")
 
     async def ENV(self) -> Table:
         try:
