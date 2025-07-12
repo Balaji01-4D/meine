@@ -19,7 +19,7 @@ Footer{
 * {
   /* scrollbar-color: $accent 30%;
   scrollbar-color-hover: $accent 50%;
-  scrollbar-color-active: $accent 80%;
+  scrollbar-color-active: $accent 80%; 
   scrollbar-background: $surface-darken-1;
   scrollbar-background-hover: $surface-darken-1;
   scrollbar-background-active: $surface-darken-1;*/
@@ -212,20 +212,26 @@ MeineTextAreaScreen > Container > Static{
 
 
 SystemUtilScreen {
+  background: $surface;
 
-  SystemWidgetProvider{
-    background: $surface;
+  SystemWidgetProvider {
+    background: $surface-darken-1;
+    padding: 2 2;
+    margin: 2;
+    scrollbar-size-vertical: 0;
   }
 
   Select {
-      width: 60;
-      margin: 2;
+    width: 60;
+    margin: 1;
+    
+    #widget-container {
+      overflow-y: hidden;
+    }
 
-      &:focus > SelectCurrent {
-          /* border: tall #43548b; */
-          background-tint: transparent;
-          background: #151729;
-      }
+    &:focus > SelectCurrent {
+      background-tint: transparent;
+      background: $surface-darken-2;
+    }
   }
-
 }
