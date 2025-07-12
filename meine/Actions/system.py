@@ -71,7 +71,7 @@ class System:
             accent = theme['accent']
             foreground = theme['foreground']
             
-            # Gather network information concurrently
+            
             tasks = [
                 asyncio.to_thread(socket.gethostname),
                 asyncio.to_thread(psutil.net_if_addrs),
@@ -83,11 +83,11 @@ class System:
             net_if_addrs = results[1]
             fqdn = results[2]
             
-            # Get local IP address for the hostname
+            
             ip_address_task = asyncio.to_thread(socket.gethostbyname, hostname)
             ip_address = await ip_address_task
             
-            # Create a more comprehensive network table
+            
             net_info = Table(
                 show_header=False,
                 show_lines=True,
@@ -95,14 +95,14 @@ class System:
                 border_style=primary
             )
             
-            # Basic host information
+            
             net_info.add_row("Hostname", hostname, style=foreground)
             net_info.add_row("FQDN", fqdn, style=foreground)
             net_info.add_row("Primary IP", ip_address, style=foreground)
             
-            # Try to get public IP (if internet is available)
+            
             try:
-                # Find active interfaces with non-loopback addresses
+                
                 active_interfaces = []
                 for interface, addrs in net_if_addrs.items():
                     for addr in addrs:
@@ -118,7 +118,7 @@ class System:
             except Exception:
                 pass
             
-            # Add interface address families
+            
             if_types = {
                 socket.AF_INET: "IPv4",
                 socket.AF_INET6: "IPv6",
@@ -126,7 +126,7 @@ class System:
                 getattr(socket, 'AF_LINK', None): "Hardware"
             }
             
-            # Add a summary of network interfaces by type
+            
             ipv4_count = 0
             ipv6_count = 0
             hw_count = 0
@@ -146,7 +146,7 @@ class System:
             net_info.add_row("  IPv6 Addresses", str(ipv6_count), style=foreground)
             net_info.add_row("  Hardware Addresses", str(hw_count), style=foreground)
             
-            # Add localhost information
+            
             localhost_info = await asyncio.to_thread(socket.gethostbyname_ex, 'localhost')
             if localhost_info and len(localhost_info) > 2:
                 net_info.add_row("", "", style=foreground)
@@ -408,24 +408,24 @@ _)      \.___.,|     .'
                 sys_info.append(f"[{accent}]Terminal:[{foreground}] {terminal}")
             
             
-            # Determine width of the ASCII art for proper alignment
+            
             os_art_lines = os_art.strip().split('\n')
             art_width = max(len(line) for line in os_art_lines)
             
-            # Ensure consistent width by padding shorter lines
+            
             padded_art_lines = []
             for line in os_art_lines:
-                # Right-pad each art line to have the same width
+                
                 padded_art_lines.append(f"{line:<{art_width}}")
             
             lines = []
             
-            # Combine art and info with consistent spacing
+            
             max_lines = max(len(padded_art_lines), len(sys_info))
             for i in range(max_lines):
                 art_line = padded_art_lines[i] if i < len(padded_art_lines) else " " * art_width
                 info_line = sys_info[i] if i < len(sys_info) else ""
-                # Use consistent padding between art and info text
+                
                 lines.append(f"{art_line}    {info_line}")
             
             

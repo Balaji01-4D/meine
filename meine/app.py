@@ -11,7 +11,6 @@ from meine.utils.file_manager import (
     load_settings,
     initialize_user_data_files
 )
-from meine.theme_manager import register_theme_provider
 
 initialize_user_data_files()
 
@@ -33,7 +32,6 @@ class MeineAI(App[None]):
         self.more_themes = BUILTIN_THEMES
 
     async def on_mount(self):
-        register_theme_provider(self)
         self.SETTINGS = load_settings()
         self.HISTORY = load_history()
         
