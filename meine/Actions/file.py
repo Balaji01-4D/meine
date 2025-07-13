@@ -112,7 +112,7 @@ class File:
                 return f"[{self.safe_style('foreground')}]Renamed Successfully {OldName.name} -> {NewName.name}"
             except PermissionError:
                 raise InfoNotify("Permission Denied")
-            except Exception as e:
+            except Exception:
 
                 raise InfoNotify("Error In Renaming.")
         elif not OldName.exists():

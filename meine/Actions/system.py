@@ -56,7 +56,7 @@ class System:
             if not hasattr(self, "_theme_colors"):
                 self._theme_colors = get_theme_colors()
             return f"""[{self._theme_colors['accent']}]DATE : {date}\nTIME : {time}"""
-        except Exception as e:
+        except Exception:
             return f"DATE : {date}\nTIME : {time}"
 
     async def IP(self) -> Table:
@@ -300,7 +300,7 @@ class System:
        @p~qp~~qMb
        M|@||@) M|
        @,----.JM|
-      JS^\__/  qKL
+      JS^\\_/  qKL
      dZP        qKRb
     dZP          qKKb
    fZP            SMMb
@@ -348,16 +348,16 @@ _)      \.___.,|     .'
        @p~qp~~qMb
        M|@||@) M|
        @,----.JM|
-      JS^\__/  qKL
+      JS^\\_/  qKL
      dZP        qKRb
     dZP          qKKb
    fZP            SMMb
    HZM            MMMM
    FqM            MMMM
- __| ".        |\dS"qML
- |    `.       | `' \Zq
-_)      \.___.,|     .'
-\____   )MMMMMP|   .'
+ __| ".        |\\dS"qML
+ |    `.       | `' \\Zq
+_)      \\.___.,|     .'
+\\____   )MMMMMP|   .'
      `-'       `--'
                 """
 

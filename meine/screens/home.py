@@ -155,7 +155,7 @@ class HomeScreen(Screen):
             self.HISTORY_index = len(self.app.HISTORY)
             event.input.value = ""
 
-        except PermissionError as e:
+        except PermissionError:
             None
 
     def key_ctrl_r(self) -> None:
