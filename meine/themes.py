@@ -40,62 +40,6 @@ BUILTIN_THEMES: dict[str, Theme] = {
         panel="#2D2B55",  # Slightly Lighter Blue-Purple
         foreground="#E0E0FF",  # Light lavender white
     ),
-    "nebula": Theme(
-        name="nebula",
-        primary="#4169E1",  # Royal Blue, more vibrant than Midnight Blue
-        secondary="#9400D3",  # Dark Violet, more vibrant than Indigo Dye
-        warning="#FFD700",  # Kept Gold for warnings
-        error="#FF1493",  # Deep Pink, more nebula-like than Crimson
-        success="#00FF7F",  # Spring Green, slightly more vibrant
-        accent="#FF00FF",  # Magenta, for a true neon accent
-        dark=True,
-        background="#0A0A23",  # Dark Navy, closer to a night sky
-        surface="#1C1C3C",  # Dark Blue-Purple
-        panel="#2E2E5E",  # Slightly Lighter Blue-Purple
-        foreground="#D0D8FF",  # Soft blue-white
-    ),
-    "alpine": Theme(
-        name="alpine",
-        primary="#4A90E2",  # Clear Sky Blue
-        secondary="#81A1C1",  # Misty Blue
-        warning="#EBCB8B",  # Soft Sunlight
-        error="#BF616A",  # Muted Red
-        success="#A3BE8C",  # Alpine Meadow Green
-        accent="#5E81AC",  # Mountain Lake Blue
-        dark=True,
-        background="#2E3440",  # Dark Slate Grey
-        surface="#3B4252",  # Darker Blue-Grey
-        panel="#434C5E",  # Lighter Blue-Grey
-        foreground="#E5E9F0",  # Snow white with blue undertone
-    ),
-    "cobalt": Theme(
-        name="cobalt",
-        primary="#334D5C",  # Deep Cobalt Blue
-        secondary="#4878A6",  # Slate Blue
-        warning="#FFAA22",  # Amber, suitable for warnings related to primary
-        error="#E63946",  # Red, universally recognized for errors
-        success="#4CAF50",  # Green, commonly used for success indication
-        accent="#D94E64",  # Candy Apple Red
-        dark=True,
-        surface="#27343B",  # Dark Lead
-        panel="#2D3E46",  # Storm Gray
-        background="#1F262A",  # Charcoal
-        foreground="#C0D6DF",  # Light blue-gray
-    ),
-    "twilight": Theme(
-        name="twilight",
-        primary="#367588",
-        secondary="#5F9EA0",
-        warning="#FFD700",
-        error="#FF6347",
-        success="#00FA9A",
-        accent="#FF7F50",
-        dark=True,
-        background="#191970",
-        surface="#3B3B6D",
-        panel="#4C516D",
-        foreground="#E6E6FA",  # Lavender mist
-    ),
     "hacker": Theme(
         name="hacker",
         primary="#00FF00",  # Bright Green (Lime)
@@ -109,20 +53,6 @@ BUILTIN_THEMES: dict[str, Theme] = {
         surface="#1A1A1A",  # Very Dark Gray
         panel="#2A2A2A",  # Dark Gray
         foreground="#33FF33",  # Bright terminal green
-    ),
-    "aurora": Theme(
-        name="aurora",
-        primary="#76B3F0",  # Glacier Blue
-        secondary="#A1D6E2",  # Ice Blue
-        warning="#F8E71C",  # Bright Yellow
-        error="#FF6B6B",  # Warm Red
-        success="#50C878",  # Emerald Green
-        accent="#DDA0DD",  # Orchid
-        dark=True,
-        background="#0B132B",  # Deep Midnight Blue
-        surface="#1C2541",  # Dark Blue Slate
-        panel="#3A506B",  # Muted Teal
-        foreground="#ECF7FF",  # Ice blue white
     ),
     "cyberpunk": Theme(
         name="cyberpunk",
@@ -151,5 +81,25 @@ BUILTIN_THEMES: dict[str, Theme] = {
         surface="#3B2E50",  # Muted Dark Blue
         panel="#503571",  # Deep Magenta
         foreground="#F2F2FF",  # Bright white with slight purple tint
+    ),
+    "dracula-pro": Theme(
+        name="dracula-pro",
+        primary="#9580FF",  # Enhanced Purple (slightly brighter)
+        secondary="#7390AA",  # Enhanced Comment Blue (higher contrast)
+        warning="#FFCA80",  # Enhanced Orange (brighter for better visibility)
+        error="#FF6E6E",  # Enhanced Red (slightly brighter)
+        success="#5AF78E",  # Enhanced Green (slightly brighter)
+        accent="#FF92DF",  # Enhanced Pink (slightly brighter)
+        dark=True,
+        background="#22212C",  # Darker Background (more contrast)
+        surface="#2A2B3C",  # Enhanced Current Line
+        panel="#34353E",  # Enhanced Selection
+        foreground="#F8F8F2",  # Classic Foreground
+        variables={
+            "button-color-foreground": "#22212C",
+            "scrollbar-background": "#282A36",
+            "scrollbar-color": "#BD93F9",
+            "link-color": "#8BE9FD",  # Cyan for links
+        },
     ),
 }

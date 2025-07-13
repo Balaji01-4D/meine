@@ -95,9 +95,6 @@ class MeineAI(App[None]):
 
         _theme = self.current_theme
 
-        self.notify(_theme.name)
- 
-
         if (_theme.name != "textual-ansi"):
 
             return {
