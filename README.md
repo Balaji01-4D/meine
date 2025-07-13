@@ -54,36 +54,32 @@
 </p>
 
 <p align="center">
-  <img src="https://github.com/Balaji01-4D/meine/blob/main/img/widgets/system_info.png" alt="Text editor" width="80%">
+  <img src="https://github.com/Balaji01-4D/meine/blob/main/img/widgets/system_info.png" alt="System widget" width="80%">
 </p>
 
-<p align="center"><b>System widget (inspired from Neofetch) </b></p>
+<p align="center"><b>System widget (inspired by Neofetch)</b></p>
 
 
 <p align="center">
-  <img src="https://github.com/Balaji01-4D/meine/blob/main/img/new2.png" alt="Text editor" width="80%">
+  <img src="https://github.com/Balaji01-4D/meine/blob/main/img/new2.png" alt="Dynamic Suggestions" width="80%">
 </p>
 
 <p align="center"><b>Dynamic Suggestions</b></p>
 
 <p align="center">
-  <img src="https://github.com/Balaji01-4D/meine/blob/main/img/widgets/battery_updated.png" alt="Text editor" width="80%">
+  <img src="https://github.com/Balaji01-4D/meine/blob/main/img/widgets/battery_updated.png" alt="Battery widget" width="80%">
 </p>
 
 <p align="center"><b>Battery widget</b></p>
 
 <p align="center">
-  <img src="https://github.com/Balaji01-4D/meine/blob/main/img/widgets/ram_widget.png" alt="Text editor" width="80%">
+  <img src="https://github.com/Balaji01-4D/meine/blob/main/img/widgets/ram_widget.png" alt="RAM widget" width="80%">
 </p>
 
-<p align="center"><b>Ram widget</b></p>
-
-
-
-
+<p align="center"><b>RAM widget</b></p>
 
 <p align="center">
-  <img src="https://github.com/Balaji01-4D/meine/blob/main/img/widgets/cpu_info.png" alt="Text editor" width="80%">
+  <img src="https://github.com/Balaji01-4D/meine/blob/main/img/widgets/cpu_info.png" alt="CPU widget" width="80%">
 </p>
 
 <p align="center"><b>CPU widget</b></p>
