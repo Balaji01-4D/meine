@@ -35,7 +35,7 @@
 
 - **📊 System Dashboard**
   Real-time system insights via one-liner commands:
-  `cpu`, `ram`, `gpu`, `battery`, `ip`, `user`, `env`, and more.
+  `cpu`, `ram`, `battery`, `ip`, `user`, `env`, and more.
 
 - **🧩 Plugin Ready**
   Drop in your own Python modules to extend functionality without altering core logic.
@@ -46,6 +46,8 @@
 <p align="center">
   <img src="https://github.com/Balaji01-4D/meine/blob/main/img/new1.png" alt="Input shell" width="45%" hspace="10">
   <img src="https://github.com/Balaji01-4D/meine/blob/main/img/new3.png" alt="Settings screen" width="45%" hspace="10">
+  <img src="https://github.com/Balaji01-4D/meine/blob/main/img/widgets/battery_updated.png" alt="Settings screen" width="45%" hspace="10">
+
 </p>
 
 <p align="center">
