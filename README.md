@@ -60,6 +60,17 @@
 
 <p align="center"><b>Dynamic Suggestions</b></p>
 
+<p align="center">
+  <img src="https://github.com/Balaji01-4D/meine/blob/main/img/widgets/battery_updated.png" alt="Text editor" width="60%">
+</p>
+
+<p align="center"><b>System utils widget</b></p>
+
+<p align="center">
+  <img src="https://github.com/Balaji01-4D/meine/blob/main/img/widgets/battery_updated.png" alt="Text editor" width="60%">
+</p>
+
+<p align="center"><b>System utils widget</b></p>
 
 ---
 
