@@ -23,9 +23,10 @@ class System:
     os_type = platform.system()
     
     def safe_style(self, style_name):
-        """Safely get a style from theme, with fallback to default colors if there's an error"""
+        """Safely get a style from themer"""
 
         theme = get_theme_colors()
+
         return theme.get(style_name, 'white')
 
 

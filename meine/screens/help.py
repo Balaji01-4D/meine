@@ -12,13 +12,11 @@ HELP_MANUAL = """\
 
 
 - **Ctrl + D**: Toggle the directory tree.
-- **Left Arrow Key**: Move to the parent directory.
-- **Right Arrow Key** or **Mouse Click**: Move to the currently focused directory.
-- **Up Arrow Key / Down Arrow Key**: Navigate up or down through directories.
+- **Mouse Click**: Move to the currently focused directory.
 - **Home Key**: Move directly to the home directory.
 - **Ctrl + Click**: Copy the name of the directory or file to the input console.
-- **Tab**: Refresh the directory tree.
-
+- **Ctrl + r**: Refresh the directory tree.
+- **Ctrl + M**: open the system utils screen.
 ## Note
 
 - Changing the directory in the directory tree will also update the **current working directory**.
@@ -72,26 +70,6 @@ HELP_MANUAL = """\
 | Folder     | `search (or) find (or) where "text" <folder path>`      |
 | File       | `search (or) find (or) where "text" <file path>`        |
 
----
-
-## System Commands
-
-| Command | Description                              |
-|---------|------------------------------------------|
-| `ram`   | Display RAM details                      |
-| `cpu`   | Display CPU details                      |
-| `gpu`   | Display GPU details                      |
-| `battery` | Display battery status                  |
-| `charge` | Display charging status                 |
-| `ip`    | Display IP address                       |
-| `disk`  | Display disk information                 |
-| `time`  | Display current system time              |
-| `os`    | Display operating system information     |
-| `sys`   | Display system information               |
-| `user,me` | Display current user information        |
-| `net`   | Display network details                  |
-| `env`   | Display environmental variables          |
-
  """
 
 
@@ -100,5 +78,4 @@ class HelpScreen(ModalScreen[None]):
     CSS_PATH = Path(__file__).parent.parent / "tcss/help.tcss"
 
     def compose(self):
-
         yield MarkdownViewer(HELP_MANUAL)

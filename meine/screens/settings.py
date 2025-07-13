@@ -40,7 +40,7 @@ class Settings(ModalScreen):
     def compose(self):
 
         self.select_app_theme = Select(
-            [(themes, themes) for themes in self.app._registered_themes.keys()],
+            [(themes, themes) for themes in self.app._registered_themes.keys() if themes != "textual-ansi"],
             prompt="choose a theme",
             allow_blank=False,
             id="select-app-theme",

@@ -2,12 +2,31 @@ from collections.abc import Callable
 from textual.widgets import Static
 from rich.panel import Panel
 from rich.align import Align
+from rich.text import Text
 from rich.errors import MissingStyle
+from meine.exceptions import InfoNotify
 
 from meine.Actions import System
+from meine.Actions.app_theme import get_theme_colors
 
 async def default():
-    return ""
+    """Default func when no widget is selected"""
+    theme = get_theme_colors()
+    primary = theme.get('primary', 'white')
+    accent = theme.get('accent', 'yellow')
+    foreground = theme.get('foreground', 'white')
+    
+    message = Text.assemble(
+        ("Select a ", foreground),
+        ("system widget", accent),
+        (" from the menu to display information", foreground)
+    )
+    
+    return Panel(
+        Align.center(message),
+        title=Text("System Widget", style=accent),
+        border_style=primary
+    )
 
 
 
@@ -19,7 +38,8 @@ class SystemWidgetProvider(Static):
     def __init__(self, function_id = 0, content = "", *, expand = False, shrink = True, markup = True, name = None, id = None, classes = None, disabled = False):
         super().__init__(content, expand=expand, shrink=shrink, markup=markup, name=name, id=id, classes=classes, disabled=disabled)
 
-    def _on_mount(self, event):
+    async def _on_mount(self, event):
+        """this setups system function and update it to the default"""
         self.sys = System()
 
         self.system_utils_callable_map = {
@@ -35,22 +55,31 @@ class SystemWidgetProvider(Static):
 
         }
 
+        self.update(await default())
+
         return super()._on_mount(event)
 
     
     def get_function_by_id(self, id: int):
-        return self.system_utils_callable_map.get(id, 0)
+        return self.system_utils_callable_map.get(id, default)
     
     async def update_widget(self):
-        result = await self.RUNNING_FUNCTION()
 
-        if (isinstance(result, Panel)):
-            self.update(Align.center(result))
-        else:
-            self.update(Panel(
-                Align.center(result),
-                border_style=self.app.current_theme.primary
-            ))
+        try:
+            result = await self.RUNNING_FUNCTION()
+
+            if (isinstance(result, Panel)):
+                self.update(Align.center(result))
+            else:
+                self.update(Panel(
+                    Align.center(result),
+                    border_style=self.app.current_theme.primary
+                ))
+
+        except MissingStyle:
+            self.notify("this theme doesnot support dynamic widgets currently")
+        
+            
 
 
     def set_function(self, id):

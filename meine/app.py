@@ -44,17 +44,13 @@ class MeineAI(App[None]):
 
 
     def _on_exit_app(self):
+        """ ctrl + q handles quiting and also saving the configuration changes"""
         save_history(self.HISTORY)
         save_settings(self.SETTINGS)
         return super()._on_exit_app()
 
     def key_ctrl_k(self):
-        """
-        Handles the Ctrl+K key press event.
-
-        If the current screen is the help screen, it pops the help screen
-        from the stack. Otherwise, it pushes the help screen onto the stack.
-        """
+        """ CTRL + K to open the help screen"""
         if self.screen.id == HELP_SCREEN_ID:
             self.pop_screen()
         elif self.screen.id == SETTINGS_SCREEN_ID:
@@ -63,13 +59,8 @@ class MeineAI(App[None]):
             self.push_screen(HelpScreen(id=HELP_SCREEN_ID))
 
     def key_ctrl_s(self):
-        """
-        Handles the Ctrl+S key press event.
-
-        If the current screen is the settings screen, it pops the settings
-        screen from the stack. Otherwise, it pushes the settings screen
-        onto the stack.
-        """
+        """ ctrl + s to open the setting screen"""
+    
         if self.screen.id == SETTINGS_SCREEN_ID:
             self.pop_screen()
         elif self.screen.id == HELP_SCREEN_ID:
@@ -77,7 +68,8 @@ class MeineAI(App[None]):
         else:
             self.push_screen(Settings(id=SETTINGS_SCREEN_ID))
 
-    def key_ctrl_u(self):
+    def key_ctrl_m(self):
+        """ctrl+m to open the system utility screen"""
         if self.screen.id == SYSTEM_UTILS_SCREEN_ID:
             self.pop_screen()
         else:
@@ -86,12 +78,7 @@ class MeineAI(App[None]):
 
 
     def key_escape(self):
-        """
-        Handles the Escape key press event.
-
-        If the current screen is not the home screen, it pops the current
-        screen from the stack.
-        """
+        """ ESC key for closing the screen"""
         if self.screen.id != HOME_SCREEN_ID:
             self.pop_screen()
         else:
@@ -103,21 +90,41 @@ class MeineAI(App[None]):
 
 
     def get_theme_colors(self):
+        """this provides theme to actions package
+        and this handle textual-ansi due to the MissingStyle exception in rich"""
 
         _theme = self.current_theme
 
+        self.notify(_theme.name)
+ 
+
+        if (_theme.name != "textual-ansi"):
+
+            return {
+                "primary": _theme.primary,
+                "secondary": _theme.secondary,
+                "warning": _theme.warning,
+                "error": _theme.error,
+                "success": _theme.success,
+                "accent": _theme.accent,
+                "foreground": _theme.foreground,
+                "background": _theme.background,
+                "surface": _theme.surface,
+                "panel": _theme.panel,
+                "boost": _theme.boost,
+            }
+
         return {
-            "primary": _theme.primary,
-            "secondary": _theme.secondary,
-            "warning": _theme.warning,
-            "error": _theme.error,
-            "success": _theme.success,
-            "accent": _theme.accent,
-            "foreground": _theme.foreground,
-            "background": _theme.background,
-            "surface": _theme.surface,
-            "panel": _theme.panel,
-            "boost": _theme.boost,
+            "primary": "#BD93F9",
+            "secondary": "#6272A4",
+            "warning": "#FFB86C",
+            "error": "#FF5555",
+            "success": "#50FA7B",
+            "accent": "#FF79C6",
+            "background": "#282A36",
+            "surface": "#2B2E3B",
+            "panel": "#313442",
+            "foreground": "#F8F8F2"
         }
 
 
@@ -125,6 +132,7 @@ class MeineAI(App[None]):
 _app_instance = None
 
 def get_app():
+    """ singleton function """
     global _app_instance
     if _app_instance is None:
         _app_instance = MeineAI()
