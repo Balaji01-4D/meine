@@ -45,7 +45,7 @@
 
 <p align="center">
   <img src="https://github.com/Balaji01-4D/meine/blob/main/img/new1.png" alt="Input shell" width="45%" hspace="10">
-  <img src="https://github.com/Balaji01-4D/meine/blob/main/img/widgets/setting_screen.png" alt="Settings screen" width="45%" hspace="10">
+  <img src="https://github.com/Balaji01-4D/meine/blob/main/img/widgets/settinng_screen.png" alt="Settings screen" width="45%" hspace="10">
 
 </p>
 
