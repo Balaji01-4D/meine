@@ -10,4 +10,6 @@ venv/
 .idea/
 run.py
 .vscode
-/run.py
+run.py
+tests/test_reference.txt
+tests/test_result.txt
