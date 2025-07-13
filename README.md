@@ -54,6 +54,13 @@
 </p>
 
 <p align="center">
+  <img src="https://github.com/Balaji01-4D/meine/blob/main/img/widgets/system_info.png" alt="Text editor" width="80%">
+</p>
+
+<p align="center"><b>System widget (inspired from Neofetch) </b></p>
+
+
+<p align="center">
   <img src="https://github.com/Balaji01-4D/meine/blob/main/img/new2.png" alt="Text editor" width="80%">
 </p>
 
@@ -72,11 +79,14 @@
 <p align="center"><b>Ram widget</b></p>
 
 
+
+
+
 <p align="center">
-  <img src="https://github.com/Balaji01-4D/meine/blob/main/img/widgets/system_info.png" alt="Text editor" width="80%">
+  <img src="https://github.com/Balaji01-4D/meine/blob/main/img/widgets/cpu_info.png" alt="Text editor" width="80%">
 </p>
 
-<p align="center"><b>System widget (inspired from neofetch) </b></p>
+<p align="center"><b>CPU widget</b></p>
 
 ---
 
