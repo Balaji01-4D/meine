@@ -43,13 +43,13 @@ class File:
                 await asyncio.to_thread(FileName.unlink)
                 return f"[{self.safe_style('foreground')}]{FileName.name} Deleted Successfully."
             except FileNotFoundError:
-                raise InfoNotify(f"File Not found")
+                raise InfoNotify("File Not found")
             except PermissionError:
-                raise InfoNotify(f"Permission denied")
+                raise InfoNotify("Permission denied")
             except Exception as e:
                 raise InfoNotify(f"Error In Deleting {FileName.name}: {e}")
         else:
-            raise InfoNotify(f"File Not found")
+            raise InfoNotify("File Not found")
 
     async def Move_File(
         self, Source: Path, Destination: Path
@@ -111,10 +111,10 @@ class File:
                 await asyncio.to_thread(OldName.rename, NewName)
                 return f"[{self.safe_style('foreground')}]Renamed Successfully {OldName.name} -> {NewName.name}"
             except PermissionError:
-                raise InfoNotify(f"Permission Denied")
+                raise InfoNotify("Permission Denied")
             except Exception as e:
 
-                raise InfoNotify(f"Error In Renaming.")
+                raise InfoNotify("Error In Renaming.")
         elif not OldName.exists():
             raise InfoNotify(f"{OldName.name} Is Not Found.")
         elif NewName.exists():
@@ -175,7 +175,7 @@ class File:
                     f"{Name.name} Is Already in {Name.resolve().parent} Directory"
                 )
         except PermissionError:
-            raise InfoNotify(f"Permission Denied")
+            raise InfoNotify("Permission Denied")
         except Exception as e:
 
             raise InfoNotify(f"Error{e}")

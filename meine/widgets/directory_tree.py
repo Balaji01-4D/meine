@@ -62,7 +62,7 @@ class DTree(DirectoryTree):
                     f"{focused_path.name} is a file", severity="information"
                 )
             else:
-                self.app.notify(f"select a folder", severity="warning")
+                self.app.notify("select a folder", severity="warning")
         except PermissionError:
             self.app.notify(
                 f"{focused_path.name} Permission Denied", severity="warning"

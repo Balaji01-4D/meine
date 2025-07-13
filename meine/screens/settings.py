@@ -108,7 +108,7 @@ class Settings(ModalScreen):
         if event.button.id == "clear_history_bt":
             clear_history()
             self.app.HISTORY = []
-            self.notify(f"Command history is cleared")
+            self.notify("Command history is cleared")
 
     def on_switch_changed(self, event: Switch.Changed) -> None:
         if event.switch.id == "hidden_files_sw":
