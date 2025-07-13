@@ -2,9 +2,7 @@ import asyncio
 import datetime as dt
 import os
 import platform
-import shutil as sl
 import subprocess
-from pathlib import Path
 from time import ctime
 
 import psutil

@@ -4,7 +4,6 @@ from rich.panel import Panel
 from rich.align import Align
 from rich.text import Text
 from rich.errors import MissingStyle
-from meine.exceptions import InfoNotify
 
 from meine.Actions import System
 from meine.Actions.app_theme import get_theme_colors

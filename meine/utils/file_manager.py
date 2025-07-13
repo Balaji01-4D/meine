@@ -1,4 +1,3 @@
-from fileinput import filename
 import json
 import random
 from pathlib import Path
@@ -6,7 +5,6 @@ from pathlib import Path
 from appdirs import user_data_dir
 import importlib.resources as pkg_resources
 
-from meine.exceptions import InfoNotify
 
 APP_NAME = "meine"
 

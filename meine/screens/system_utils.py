@@ -1,12 +1,9 @@
-import psutil
 
 
 from textual.screen import ModalScreen
 from textual import on
 from textual.widgets import Select
-from textual.css import _style_properties
-from textual.widget import Widget
-from textual.containers import VerticalScroll, Middle, Center
+from textual.containers import VerticalScroll, Center
 
 from meine.widgets.system_widget_provider import SystemWidgetProvider
 
