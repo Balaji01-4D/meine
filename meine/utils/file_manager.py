@@ -3,7 +3,6 @@ import json
 import random
 from pathlib import Path
 
-import xdialog
 from appdirs import user_data_dir
 import importlib.resources as pkg_resources
 
@@ -57,17 +56,6 @@ def load_settings() -> dict[str | str | bool]:
     with open(SETTINGS_JSON_PATH, "r") as file:
         return json.load(file)
 
-
-def add_custom_path_expansion(Name: str | None = None) -> str:
-    if not Name:
-        raise InfoNotify("Need a Name")
-
-    selected_path = xdialog.directory()
-    data = load_Path_expansion()
-    data.setdefault("path_expansions", {})[Name] = selected_path
-    with open(CUSTOM_JSON_PATH, "w") as file:
-        json.dump(data, file, indent=4)
-    return f"{Name} = {selected_path} assigned successfully"
 
 def load_Path_expansion() -> dict[str]:
     with open(CUSTOM_JSON_PATH, "r") as file:

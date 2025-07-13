@@ -4,7 +4,7 @@ from re import Match, Pattern
 
 from rich.table import Table
 
-from meine.Actions import File, Zip
+from meine.Actions import File
 from meine.exceptions import InfoNotify
 
 d: dict[str, Pattern] = {
@@ -12,13 +12,9 @@ d: dict[str, Pattern] = {
     "onepath": re.compile(r"""(d|rm|r|del|mk|mkdir|mkd|create|delete|clr|show)\s+(.+)"""),
     "rename": re.compile(r"(rename|rn)\s+(.+)\s+(?:as|to)\s+(.+)"),
     "search_text": re.compile(r"""(find|where|search)\s+["'](.+)["']\s+(.+)"""),
-    "notepad": re.compile(r"(write|notepad|wr)\s+(.+)"),
-    "compress": re.compile(r"""(z|uz|zip|tar|gz|7z|unzip)\s+(.+)"""),
 }
 
 files = File()
-zips = Zip()
-
 
 async def CLI(Command):
 
@@ -104,31 +100,7 @@ async def CLI(Command):
                 return "\n".join(results)
             return await files.ClearContent_File(Path(source))
 
-    async def handle_system(RegexMatch: Match):
-        act = RegexMatch.group(1)
-        extra = RegexMatch.group(2)
 
-        raise (f"[#E06C75]Unknown system action: {act}")
-
-    async def handle_compress(RegexMatch: Match) -> str:
-        act: str = RegexMatch.group(1)
-        source_unknown: str = RegexMatch.group(2)
-        srcs: list | str = (
-            source_unknown.split(",") if "," in source_unknown else source_unknown
-        )
-
-        if act in {"unzip", "uz"}:
-            if isinstance(srcs, list):
-                results = [await zips.Extract(Path(s)) for s in srcs]
-                return "\n".join(results)
-            return await zips.Extract(Path(srcs))
-
-        else:
-            if isinstance(srcs, list):
-                results = [await zips.Compress(Path(s), format=act) for s in srcs]
-                return "\n".join(results)
-
-            return await zips.Compress(Path(srcs), format=act)
 
     async def handle_text_find(RegexMatch: Match) -> str | Table:
         text = RegexMatch.group(2)
@@ -145,8 +117,6 @@ async def CLI(Command):
         "rename": handle_rename,
         "twopath": handle_two_path,
         "onepath": handle_one_path,
-        "system": handle_system,
-        "compress": handle_compress,
         "search_text": handle_text_find,
     }
 
