@@ -9,8 +9,8 @@
 <a href="https://github.com/Balaji01-4D/meine/graphs/contributors"><img alt="GitHub contributors" src="https://img.shields.io/github/contributors/Balaji01-4D/meine?color=2b9348"></a>
 <a href="https://github.com/Balaji01-4D/meine/blob/master/LICENSE"><img src="https://img.shields.io/github/license/Balaji01-4D/meine?color=2b9348" alt="License Badge"/></a>
 
-<img alt="Meine Demo" src="img/intro.gif" />
-<img alt="Meine Demo" src="img/widgets.gif" />
+<img alt="Meine Demo" src="img/intro.gif" width="80%" />
+<img alt="Widgets Demo" src="img/widgets.gif" width="80%" />
 
 
 <i>Loved the project? Please consider <a href="https://ko-fi.com/balaji01">donating</a> to help it improve!</i>
@@ -20,26 +20,26 @@
 
 ## 🚀 Features
 
-- **🔍 Regex-Based Command Parsing**
+- **🔍 Regex-Based Command Parsing**  
   Use intuitive commands to delete, copy, move, rename, search, and create files or folders.
 
-- **🗂️ TUI Directory Navigator**
+- **🗂️ TUI Directory Navigator**  
   Browse your filesystem in a reactive terminal UI—keyboard and mouse supported.
 
-- **💬 Live Command Console**
+- **💬 Live Command Console**  
   A built-in shell for interpreting commands and reflecting state changes in real time.
 
-- **⚡ Asynchronous & Modular**
+- **⚡ Asynchronous & Modular**  
   Built with `asyncio`, `aiofiles`, `py7zr`, and modular architecture for responsive performance.
 
-- **🎨 Theming & Config**
+- **🎨 Theming & Config**  
   CSS-powered themes, JSON-based user preferences, and dynamic runtime settings.
 
-- **📊 System Dashboard**
+- **📊 System Dashboard**  
   Real-time system insights via one-liner commands:
   `cpu`, `ram`, `battery`, `ip`, `user`, `env`, and more.
 
-- **🧩 Plugin Ready**
+- **🧩 Plugin Ready**  
   Drop in your own Python modules to extend functionality without altering core logic.
 
 ---
@@ -119,6 +119,3 @@ pip install .
 | **Search**  | `search "text" folder/` · `find "term" notes.md` |
 
 ---
-
-
-
