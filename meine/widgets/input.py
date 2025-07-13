@@ -99,7 +99,7 @@ class MeineInput(Input):
                 return [first], None, " "
 
             hint = rest[-1]
-            if len(rest) == 1 and hint.endswith(','):
+            if len(rest) == 1 and hint.endswith(","):
                 return [first, hint], None, ""
 
             return rest[:-1] + [first], hint, " "
@@ -108,10 +108,14 @@ class MeineInput(Input):
 
     def suggestion_provider(self, hint: str | None = None) -> list[str]:
         try:
-            items = os.scandir('.')
+            items = os.scandir(".")
             if hint:
                 hint_lower = hint.lower()
-                return [item.name for item in items if item.name.lower().startswith(hint_lower)]
+                return [
+                    item.name
+                    for item in items
+                    if item.name.lower().startswith(hint_lower)
+                ]
             return [item.name for item in items]
         except OSError:
             return []
@@ -164,18 +168,15 @@ class MeineInput(Input):
         self.cursor_position = len(self.value)
 
     def on_input_submitted(self) -> None:
-        """Optimized input submission handler."""
-        if self.value.strip():  # Only increment history for non-empty inputs
+        if self.value.strip():
             self.history_index += 1
         self.suggestions.clear()
         self.suggester = None
 
-
     def replace_with_path_expansion(self, keyword: str) -> None:
-        """Optimized path expansion replacement with cached paths."""
         current_dir = Path.cwd()
 
-        if not hasattr(self, '_default_paths'):
+        if not hasattr(self, "_default_paths"):
             self._default_paths = {
                 "home": Path.home(),
                 "current": current_dir,
@@ -196,5 +197,5 @@ class MeineInput(Input):
             self.notify(
                 f"Path expansion '{keyword}' not found",
                 severity="error",
-                title="Not Found"
+                title="Not Found",
             )

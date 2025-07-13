@@ -9,7 +9,7 @@ from meine.utils.file_manager import (
     save_settings,
     load_history,
     load_settings,
-    initialize_user_data_files
+    initialize_user_data_files,
 )
 
 initialize_user_data_files()
@@ -34,23 +34,23 @@ class MeineAI(App[None]):
     async def on_mount(self):
         self.SETTINGS = load_settings()
         self.HISTORY = load_history()
-        
+
         from meine.screens.home import HomeScreen
+
         await self.push_screen(HomeScreen(id=HOME_SCREEN_ID))
-        
+
         for theme in BUILTIN_THEMES.values():
             self.register_theme(theme)
         self.theme = self.SETTINGS["app_theme"]
 
-
     def _on_exit_app(self):
-        """ ctrl + q handles quiting and also saving the configuration changes"""
+        """ctrl + q handles quiting and also saving the configuration changes"""
         save_history(self.HISTORY)
         save_settings(self.SETTINGS)
         return super()._on_exit_app()
 
     def key_ctrl_k(self):
-        """ CTRL + K to open the help screen"""
+        """CTRL + K to open the help screen"""
         if self.screen.id == HELP_SCREEN_ID:
             self.pop_screen()
         elif self.screen.id == SETTINGS_SCREEN_ID:
@@ -59,8 +59,8 @@ class MeineAI(App[None]):
             self.push_screen(HelpScreen(id=HELP_SCREEN_ID))
 
     def key_ctrl_s(self):
-        """ ctrl + s to open the setting screen"""
-    
+        """ctrl + s to open the setting screen"""
+
         if self.screen.id == SETTINGS_SCREEN_ID:
             self.pop_screen()
         elif self.screen.id == HELP_SCREEN_ID:
@@ -75,19 +75,15 @@ class MeineAI(App[None]):
         else:
             self.push_screen(SystemUtilScreen(id=SYSTEM_UTILS_SCREEN_ID))
 
-
-
     def key_escape(self):
-        """ ESC key for closing the screen"""
+        """ESC key for closing the screen"""
         if self.screen.id != HOME_SCREEN_ID:
             self.pop_screen()
         else:
             self.notify("You are in the home screen")
 
-
     def push_NameGetter_screen(self, title, callback):
         self.push_screen(NameGetterScreen(title, callback))
-
 
     def get_theme_colors(self):
         """this provides theme to actions package
@@ -95,7 +91,7 @@ class MeineAI(App[None]):
 
         _theme = self.current_theme
 
-        if (_theme.name != "textual-ansi"):
+        if _theme.name != "textual-ansi":
 
             return {
                 "primary": _theme.primary,
@@ -121,23 +117,25 @@ class MeineAI(App[None]):
             "background": "#282A36",
             "surface": "#2B2E3B",
             "panel": "#313442",
-            "foreground": "#F8F8F2"
+            "foreground": "#F8F8F2",
         }
-
 
 
 _app_instance = None
 
+
 def get_app():
-    """ singleton function """
+    """singleton function"""
     global _app_instance
     if _app_instance is None:
         _app_instance = MeineAI()
     return _app_instance
 
+
 def run():
     app = get_app()
     app.run()
 
-if __name__ == '__main__':
+
+if __name__ == "__main__":
     run()

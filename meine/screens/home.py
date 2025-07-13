@@ -19,8 +19,6 @@ from meine.widgets.input import MeineInput
 from meine.utils.file_manager import load_random_quote
 
 
-
-
 class HomeScreen(Screen):
 
     AUTO_FOCUS = "#command-input"
@@ -39,7 +37,7 @@ class HomeScreen(Screen):
             history=self.app.HISTORY,
             history_index=self.HISTORY_INDEX,
         )
-        self.rich_log = RichLog(id="output",highlight=True)
+        self.rich_log = RichLog(id="output", highlight=True)
 
         self.directory_tree_container = Directory_tree_container(
             classes="-hidden", id="directory-tree-container"
@@ -116,7 +114,7 @@ class HomeScreen(Screen):
             if cmd and event.input.id == "command-input":
                 try:
                     if "cd " in cmd:
-                        cmdpath = cmd.replace("cd ",'')
+                        cmdpath = cmd.replace("cd ", "")
                         cmdpath = Path(cmdpath)
                         if cmdpath.is_dir():
                             self.app.run_worker(
@@ -163,7 +161,6 @@ class HomeScreen(Screen):
     def key_ctrl_r(self) -> None:
         self.Dtree.reload()
 
-
     def clear_rich_log(self) -> None:
         self.rich_log.clear()
 
@@ -174,7 +171,9 @@ class HomeScreen(Screen):
             if result:
                 if not isinstance(result, Panel):
                     theme = self.app.current_theme
-                    self.rich_log.write(Panel(result, expand=False, style=theme.primary))
+                    self.rich_log.write(
+                        Panel(result, expand=False, style=theme.primary)
+                    )
                 else:
                     self.rich_log.write(result)
         except InfoNotify as e:
@@ -256,14 +255,10 @@ class HomeScreen(Screen):
         except Exception:
             return False
 
-
     def key_slash(self):
         if not self.focused.id == "command-input":
             self.inputconsole.focus()
             self.inputconsole.select_on_focus = False
-
-
-
 
     # def handle_files_click_input(self, widget):
     #     def quotes_for_spaced_name(name: str):

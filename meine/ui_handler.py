@@ -9,12 +9,15 @@ from meine.exceptions import InfoNotify
 
 d: dict[str, Pattern] = {
     "twopath": re.compile(r"""(c|m|mv|cp|copy|move)\s+(.+)\s+(?:to)\s+(.+)"""),
-    "onepath": re.compile(r"""(d|rm|r|del|mk|mkdir|mkd|create|delete|clr|show)\s+(.+)"""),
+    "onepath": re.compile(
+        r"""(d|rm|r|del|mk|mkdir|mkd|create|delete|clr|show)\s+(.+)"""
+    ),
     "rename": re.compile(r"(rename|rn)\s+(.+)\s+(?:as|to)\s+(.+)"),
     "search_text": re.compile(r"""(find|where|search)\s+["'](.+)["']\s+(.+)"""),
 }
 
 files = File()
+
 
 async def CLI(Command):
 
@@ -56,7 +59,7 @@ async def CLI(Command):
                 results = [await Copy(s, destination) for s in source]
                 return "\n".join(results)
             return await Copy(source, destination)
-        else:  
+        else:
             if isinstance(source, list):
                 results = [await Move(s, destination) for s in source]
                 return "\n".join(results)
@@ -71,7 +74,7 @@ async def CLI(Command):
             else source_unknown_type
         )
 
-        if act in {"delete", "del", "d",'rm'}:
+        if act in {"delete", "del", "d", "rm"}:
             if isinstance(source, list):
                 results = [await Delete(s) for s in source]
                 return "\n".join(results)
@@ -83,7 +86,7 @@ async def CLI(Command):
                 return "\n".join(results)
             return await Create(source, "file")
 
-        elif act in {"mkdir","mkd"}:
+        elif act in {"mkdir", "mkd"}:
             if isinstance(source, list):
                 results = [await Create(s) for s in source]
                 return "\n".join(results)
@@ -100,8 +103,6 @@ async def CLI(Command):
                 return "\n".join(results)
             return await files.ClearContent_File(Path(source))
 
-
-
     async def handle_text_find(RegexMatch: Match) -> str | Table:
         text = RegexMatch.group(2)
         source = Path(RegexMatch.group(3))
@@ -112,7 +113,6 @@ async def CLI(Command):
         else:
             raise InfoNotify("Source Not Found")
 
-    
     handlers = {
         "rename": handle_rename,
         "twopath": handle_two_path,

@@ -26,4 +26,6 @@ def AlreadyExist(Source: str, Destination: str) -> str:
     The file with name '< {Source} >' already exists in the '< {Destination} >' target directory
         Please choose a different name or Please choose another directory or location
     """
-    raise InfoNotify(f"The file with name '< {Source} >' already exists in the '< {Destination} >' target directory .\nPlease choose a different name or Please choose another directory or location")
+    raise InfoNotify(
+        f"The file with name '< {Source} >' already exists in the '< {Destination} >' target directory .\nPlease choose a different name or Please choose another directory or location"
+    )

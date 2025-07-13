@@ -2,12 +2,21 @@ import click
 from .app import run
 from .utils.file_manager import Quotes, clear_history
 
+
 @click.command()
-@click.option('--version','version',is_flag=True,help='return the version number')
-@click.option('--quotes.reset', 'quotes_reset', is_flag=True, help='Reset quotes file to default.')
-@click.option('--quotes.clear', 'quotes_clear', is_flag=True, help='Clear all user quotes.')
-@click.option('--quotes.add', 'quote_to_add', help='Add a new quote string to user quotes.')
-@click.option('--history.clear','history_clear', is_flag=True,help='Clear the Input history')
+@click.option("--version", "version", is_flag=True, help="return the version number")
+@click.option(
+    "--quotes.reset", "quotes_reset", is_flag=True, help="Reset quotes file to default."
+)
+@click.option(
+    "--quotes.clear", "quotes_clear", is_flag=True, help="Clear all user quotes."
+)
+@click.option(
+    "--quotes.add", "quote_to_add", help="Add a new quote string to user quotes."
+)
+@click.option(
+    "--history.clear", "history_clear", is_flag=True, help="Clear the Input history"
+)
 def main(version, quotes_reset, quotes_clear, quote_to_add, history_clear):
     quotes = Quotes()
 
@@ -23,8 +32,6 @@ def main(version, quotes_reset, quotes_clear, quote_to_add, history_clear):
     elif version:
         click.echo("meine 1.0.2")
 
-
-
     elif quotes_clear:
         quotes.clear()
         click.echo("Quotes cleared.")
@@ -35,11 +42,11 @@ def main(version, quotes_reset, quotes_clear, quote_to_add, history_clear):
 
     elif history_clear:
         clear_history()
-        click.echo('Hisoty cleared')
-
+        click.echo("Hisoty cleared")
 
     else:
         run()
 
-if __name__ == '__main__':
+
+if __name__ == "__main__":
     main()

@@ -28,6 +28,7 @@ def _initialize_file_if_missing(target: Path, resource_file: str):
         with DEFAULT_RESOURCES_PATH.joinpath(resource_file).open("rb") as default:
             target.write_bytes(default.read())
 
+
 def initialize_user_data_files():
     _initialize_file_if_missing(HISTORY_JSON_PATH, "history.json")
     _initialize_file_if_missing(SETTINGS_JSON_PATH, "settings.json")
@@ -39,9 +40,11 @@ def save_history(history: list[str]) -> None:
     with open(HISTORY_JSON_PATH, "w") as file:
         json.dump(history, file, indent=4)
 
+
 def clear_history() -> None:
     with open(HISTORY_JSON_PATH, "w") as file:
         json.dump([], file, indent=4)
+
 
 def load_history() -> list[str]:
     with open(HISTORY_JSON_PATH, "r") as file:
@@ -52,6 +55,7 @@ def save_settings(settings: dict[str, str]) -> None:
     with open(SETTINGS_JSON_PATH, "w") as file:
         json.dump(settings, file, indent=4)
 
+
 def load_settings() -> dict[str | str | bool]:
     with open(SETTINGS_JSON_PATH, "r") as file:
         return json.load(file)
@@ -61,6 +65,7 @@ def load_Path_expansion() -> dict[str]:
     with open(CUSTOM_JSON_PATH, "r") as file:
         return json.load(file)
 
+
 def load_custom_urls() -> dict[str]:
     with open(CUSTOM_JSON_PATH, "r") as file:
         return json.load(file).get("urls", {})
@@ -69,10 +74,9 @@ def load_custom_urls() -> dict[str]:
 def load_random_quote() -> str:
     with open(QUOTES_JSON_PATH, "r") as file:
         quotes = json.load(file)
-        if (quotes):
+        if quotes:
             return random.choice(quotes)
         return "Meine"
-
 
 
 class Quotes:
@@ -92,7 +96,7 @@ class Quotes:
 
     def clear(self):
         with self.USER_PATH.open("w") as file:
-            json.dump([],file)
+            json.dump([], file)
 
     def add_quote(self, quote):
         with self.USER_PATH.open("r") as file:
@@ -100,4 +104,3 @@ class Quotes:
         quotes.append(quote)
         with self.USER_PATH.open("w") as file:
             json.dump(quotes, file, indent=4)
-

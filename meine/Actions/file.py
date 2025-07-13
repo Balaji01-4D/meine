@@ -15,15 +15,14 @@ from .app_theme import get_theme_colors
 
 
 class File:
-    
+
     def safe_style(self, style_name):
         """Safely get a style from theme, with fallback to default colors if there's an error"""
         try:
             theme = get_theme_colors()
-            return theme.get(style_name, 'white')
+            return theme.get(style_name, "white")
         except Exception:
-            return 'white'
-            
+            return "white"
 
     async def Delete_File(self, FileName: Path) -> Coroutine[None, None, str]:
         """
@@ -51,7 +50,6 @@ class File:
                 raise InfoNotify(f"Error In Deleting {FileName.name}: {e}")
         else:
             raise InfoNotify(f"File Not found")
-
 
     async def Move_File(
         self, Source: Path, Destination: Path
@@ -120,7 +118,9 @@ class File:
         elif not OldName.exists():
             raise InfoNotify(f"{OldName.name} Is Not Found.")
         elif NewName.exists():
-            raise InfoNotify(f"Error {NewName.name} Is Aleady in {NewName.resolve().parent.name} Directory.")
+            raise InfoNotify(
+                f"Error {NewName.name} Is Aleady in {NewName.resolve().parent.name} Directory."
+            )
 
     async def Copy_File(
         self, Source: Path, Destination: Path
@@ -171,7 +171,9 @@ class File:
                 await asyncio.to_thread(Name.touch)
                 return f"[{self.safe_style('foreground')}]{Name.name} Is Created in {Name.resolve().parent} Directory"
             else:
-                raise InfoNotify(f"{Name.name} Is Already in {Name.resolve().parent} Directory")
+                raise InfoNotify(
+                    f"{Name.name} Is Already in {Name.resolve().parent} Directory"
+                )
         except PermissionError:
             raise InfoNotify(f"Permission Denied")
         except Exception as e:
@@ -295,15 +297,15 @@ class File:
         self, query: str, path: str = ".", search_type: str = "both"
     ) -> Coroutine[None, None, Table | str]:
         try:
-            foreground = self.safe_style('foreground')
-            primary = self.safe_style('primary')
-            error = self.safe_style('error')
-            
+            foreground = self.safe_style("foreground")
+            primary = self.safe_style("primary")
+            error = self.safe_style("error")
+
             matches_table = Table(show_lines=True, border_style=primary)
             matches_table.add_column("Found", style=foreground)
             matches_table.add_column("Type", style=foreground)
             matches = []
-            
+
             for root, dirs, files in os.walk(path):
                 if search_type in ("folders", "both"):
                     for folder in dirs:
@@ -317,20 +319,24 @@ class File:
                     for file in files:
                         if file.startswith(query):
                             matches.append(os.path.join(root, file))
-                            matches_table.add_row(
-                                str(os.path.join(root, file)), "File"
-                            )
+                            matches_table.add_row(str(os.path.join(root, file)), "File")
 
             if not matches:
-                return Panel(f"[{error}]No matches found for '{query}'", border_style=primary)
-                
+                return Panel(
+                    f"[{error}]No matches found for '{query}'", border_style=primary
+                )
+
             return matches_table
         except PermissionError:
-            return Panel(f"[{self.safe_style('error')}]Permission denied when searching for '{query}'", 
-                        border_style=self.safe_style('primary'))
+            return Panel(
+                f"[{self.safe_style('error')}]Permission denied when searching for '{query}'",
+                border_style=self.safe_style("primary"),
+            )
         except Exception as e:
-            return Panel(f"[{self.safe_style('error')}]Error searching for '{query}': {str(e)}",
-                        border_style=self.safe_style('primary'))
+            return Panel(
+                f"[{self.safe_style('error')}]Error searching for '{query}': {str(e)}",
+                border_style=self.safe_style("primary"),
+            )
 
     async def Create_Folder(self, Source: Path) -> Coroutine[None, None, str]:
         """
@@ -376,7 +382,9 @@ class File:
             Final = Destination / Source.name
 
             if Final.exists():
-                raise InfoNotify(f"{Final.name} Already Exists in {Final.resolve().parent}")
+                raise InfoNotify(
+                    f"{Final.name} Already Exists in {Final.resolve().parent}"
+                )
 
             if not Source.exists():
                 raise InfoNotify(f"{Source.name} Not Found")
@@ -412,7 +420,9 @@ class File:
             Final = Destination / Source.name
 
             if Final.exists():
-                raise InfoNotify(f"{Final.name} Already Exists in {Final.resolve().parent}")
+                raise InfoNotify(
+                    f"{Final.name} Already Exists in {Final.resolve().parent}"
+                )
             if not Source.exists():
                 raise InfoNotify(f"{Source.name} Does Not Exist")
             if not Destination.exists():
@@ -424,7 +434,6 @@ class File:
                 await asyncio.to_thread(sl.copytree, Source, Final, dirs_exist_ok=True)
                 return f"[{self.safe_style('foreground')}]{Source.name} Directory Copied Successfully to {Destination.resolve().name}"
 
-            
             elif Source.is_file():
                 await asyncio.to_thread(sl.copy2, Source, Final)
                 return f"[{self.safe_style('foreground')}]{Source.name} File Copied Successfully to {Destination.resolve().name}"
