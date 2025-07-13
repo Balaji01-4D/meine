@@ -23,11 +23,11 @@ class System:
     os_type = platform.system()
     
     def safe_style(self, style_name):
-        """Safely get a style from themer"""
-
-        theme = get_theme_colors()
-
-        return theme.get(style_name, 'white')
+        """Safely get a style from theme, with fallback to default colors if there's an error"""
+        if not hasattr(self, "_theme_colors"):
+            self._theme_colors = get_theme_colors()
+            
+        return self._theme_colors.get(style_name, 'white')
 
 
     def ShutDown(self):
@@ -56,8 +56,9 @@ class System:
         date = dt.datetime.now().date()
         time = dt.datetime.now().time()
         try:
-            theme = get_theme_colors()
-            return f"""[{theme['accent']}]DATE : {date}\nTIME : {time}"""
+            if not hasattr(self, "_theme_colors"):
+                self._theme_colors = get_theme_colors()
+            return f"""[{self._theme_colors['accent']}]DATE : {date}\nTIME : {time}"""
         except Exception as e:
             return f"DATE : {date}\nTIME : {time}"
 
@@ -67,10 +68,11 @@ class System:
     async def IP(self) -> Table:
         import socket
         try:
-            theme = get_theme_colors()
-            primary = theme['primary']
-            accent = theme['accent']
-            foreground = theme['foreground']
+            if not hasattr(self, "_theme_colors"):
+                self._theme_colors = get_theme_colors()
+            primary = self._theme_colors['primary']
+            accent = self._theme_colors['accent']
+            foreground = self._theme_colors['foreground']
             
             
             tasks = [
@@ -321,13 +323,22 @@ _)      \.___.,|     .'
                 """
             else:
                 os_art = f"""[{accent}]
-     .--.
-    |o_o |
-    |:_/ |
-   //   \\ \\
-  (|     | )
- /'\\_   _/`\\
- \\___)=(___/
+         _nnnn_
+        dGGGGMMb
+       @p~qp~~qMb
+       M|@||@) M|
+       @,----.JM|
+      JS^\__/  qKL
+     dZP        qKRb
+    dZP          qKKb
+   fZP            SMMb
+   HZM            MMMM
+   FqM            MMMM
+ __| ".        |\dS"qML
+ |    `.       | `' \Zq
+_)      \.___.,|     .'
+\____   )MMMMMP|   .'
+     `-'       `--'
                 """
             
             
@@ -1178,4 +1189,9 @@ _)      \.___.,|     .'
             return f"Permission denied to terminate the process {pid}."
         except Exception as e:
             return f"Error terminating process {pid}: {e}"
+    
+    def refresh_theme(self):
+        """Refresh the cached theme colors"""
+        self._theme_colors = get_theme_colors()
+        return self._theme_colors
 

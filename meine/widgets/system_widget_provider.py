@@ -66,6 +66,7 @@ class SystemWidgetProvider(Static):
     async def update_widget(self):
 
         try:
+            self.sys.refresh_theme()
             result = await self.RUNNING_FUNCTION()
 
             if (isinstance(result, Panel)):
