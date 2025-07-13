@@ -575,7 +575,7 @@ _)      \.___.,|     .'
                 lines = []
                 
                 
-                status_text = f"[{accent}]Status: [{foreground}]{status}"
+                status_text = f"[{accent}]              Status: [{foreground}]{status}"
                 
                 
                 if is_charging:
