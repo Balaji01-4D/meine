@@ -9,7 +9,7 @@
 <a href="https://github.com/Balaji01-4D/meine/graphs/contributors"><img alt="GitHub contributors" src="https://img.shields.io/github/contributors/Balaji01-4D/meine?color=2b9348"></a>
 <a href="https://github.com/Balaji01-4D/meine/blob/master/LICENSE"><img src="https://img.shields.io/github/license/Balaji01-4D/meine?color=2b9348" alt="License Badge"/></a>
 
-<img alt="Meine Demo" src="img/lv_0_20250531235724-ezgif.com-optimize.gif" />
+<img alt="Meine Demo" src="img/intro.gif" />
 
 <i>Loved the project? Please consider <a href="https://ko-fi.com/balaji01">donating</a> to help it improve!</i>
 
