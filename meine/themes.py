@@ -10,6 +10,7 @@ BUILTIN_THEMES: dict[str, Theme] = {
         success="#4EBF71",
         accent="#ffa62b",
         dark=True,
+        foreground="#FFFFFF",
     ),
     "monokai 1": Theme(
         name="monokai 0.1",
@@ -22,6 +23,7 @@ BUILTIN_THEMES: dict[str, Theme] = {
         background="#272822",  # Dark gray-green
         surface="#3E3D32",  # Slightly lighter gray-green
         panel="#3E3D32",  # Same as surface for consistency
+        foreground="#F8F8F2",  # Light gray with a hint of green
         dark=True,
     ),
     "galaxy": Theme(
@@ -36,6 +38,7 @@ BUILTIN_THEMES: dict[str, Theme] = {
         background="#0F0F1F",  # Very Dark Blue, almost black
         surface="#1E1E3F",  # Dark Blue-Purple
         panel="#2D2B55",  # Slightly Lighter Blue-Purple
+        foreground="#E0E0FF",  # Light lavender white
     ),
     "nebula": Theme(
         name="nebula",
@@ -49,6 +52,7 @@ BUILTIN_THEMES: dict[str, Theme] = {
         background="#0A0A23",  # Dark Navy, closer to a night sky
         surface="#1C1C3C",  # Dark Blue-Purple
         panel="#2E2E5E",  # Slightly Lighter Blue-Purple
+        foreground="#D0D8FF",  # Soft blue-white
     ),
     "alpine": Theme(
         name="alpine",
@@ -62,6 +66,7 @@ BUILTIN_THEMES: dict[str, Theme] = {
         background="#2E3440",  # Dark Slate Grey
         surface="#3B4252",  # Darker Blue-Grey
         panel="#434C5E",  # Lighter Blue-Grey
+        foreground="#E5E9F0",  # Snow white with blue undertone
     ),
     "cobalt": Theme(
         name="cobalt",
@@ -75,6 +80,7 @@ BUILTIN_THEMES: dict[str, Theme] = {
         surface="#27343B",  # Dark Lead
         panel="#2D3E46",  # Storm Gray
         background="#1F262A",  # Charcoal
+        foreground="#C0D6DF",  # Light blue-gray
     ),
     "twilight": Theme(
         name="twilight",
@@ -88,6 +94,7 @@ BUILTIN_THEMES: dict[str, Theme] = {
         background="#191970",
         surface="#3B3B6D",
         panel="#4C516D",
+        foreground="#E6E6FA",  # Lavender mist
     ),
     "hacker": Theme(
         name="hacker",
@@ -101,6 +108,7 @@ BUILTIN_THEMES: dict[str, Theme] = {
         background="#0D0D0D",  # Almost Black
         surface="#1A1A1A",  # Very Dark Gray
         panel="#2A2A2A",  # Dark Gray
+        foreground="#33FF33",  # Bright terminal green
     ),
     "aurora": Theme(
         name="aurora",
@@ -114,6 +122,7 @@ BUILTIN_THEMES: dict[str, Theme] = {
         background="#0B132B",  # Deep Midnight Blue
         surface="#1C2541",  # Dark Blue Slate
         panel="#3A506B",  # Muted Teal
+        foreground="#ECF7FF",  # Ice blue white
     ),
     "cyberpunk": Theme(
         name="cyberpunk",
@@ -127,6 +136,7 @@ BUILTIN_THEMES: dict[str, Theme] = {
         background="#080808",  # Almost Black
         surface="#181818",  # Dark Gray
         panel="#282828",  # Lighter Gray
+        foreground="#00FFFF",  # Bright cyan
     ),
     "retro_wave": Theme(
         name="retro_wave",
@@ -140,5 +150,6 @@ BUILTIN_THEMES: dict[str, Theme] = {
         background="#2D1E2F",  # Dark Purple
         surface="#3B2E50",  # Muted Dark Blue
         panel="#503571",  # Deep Magenta
+        foreground="#F2F2FF",  # Bright white with slight purple tint
     ),
 }
