@@ -348,7 +348,7 @@ _)      \.___.,|     .'
             
             
             sys_info = []
-            sys_info.append(f"[{accent}]        OS:[{foreground}] {platform.system()} {platform.release()}")
+            sys_info.append(f"[{accent}]         OS:[{foreground}] {platform.system()} {platform.release()}")
             sys_info.append(f"[{accent}]Kernel:[{foreground}] {platform.version()}")
             sys_info.append(f"[{accent}]Uptime:[{foreground}] {uptime_str}")
             

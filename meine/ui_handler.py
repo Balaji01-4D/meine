@@ -6,7 +6,6 @@ from rich.table import Table
 
 from meine.Actions import File, Zip
 from meine.exceptions import InfoNotify
-from meine.theme_manager import get_theme_colors
 
 d: dict[str, Pattern] = {
     "twopath": re.compile(r"""(c|m|mv|cp|copy|move)\s+(.+)\s+(?:to)\s+(.+)"""),
