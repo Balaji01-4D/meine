@@ -10,6 +10,8 @@
 <a href="https://github.com/Balaji01-4D/meine/blob/master/LICENSE"><img src="https://img.shields.io/github/license/Balaji01-4D/meine?color=2b9348" alt="License Badge"/></a>
 
 <img alt="Meine Demo" src="img/intro.gif" />
+<img alt="Meine Demo" src="img/widgets.gif" />
+
 
 <i>Loved the project? Please consider <a href="https://ko-fi.com/balaji01">donating</a> to help it improve!</i>
 
