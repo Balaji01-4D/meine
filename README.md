@@ -45,12 +45,12 @@
 
 <p align="center">
   <img src="https://github.com/Balaji01-4D/meine/blob/main/img/new1.png" alt="Input shell" width="45%" hspace="10">
-  <img src="https://github.com/Balaji01-4D/meine/blob/main/img/widgets/battery_updated.png" alt="Settings screen" width="45%" hspace="10">
+  <img src="https://github.com/Balaji01-4D/meine/blob/main/img/widgets/settings_screen.png" alt="Settings screen" width="45%" hspace="10">
 
 </p>
 
 <p align="center">
-  <b>Input Shell</b> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <b>Command Output</b>
+  <b>Input Shell</b> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <b>Settings screen</b>
 </p>
 
 <p align="center">
@@ -66,10 +66,10 @@
 <p align="center"><b>System utils widget</b></p>
 
 <p align="center">
-  <img src="https://github.com/Balaji01-4D/meine/blob/main/img/widgets/battery_updated.png" alt="Text editor" width="60%">
+  <img src="https://github.com/Balaji01-4D/meine/blob/main/img/widgets/ram_widget.png" alt="Text editor" width="60%">
 </p>
 
-<p align="center"><b>System utils widget</b></p>
+<p align="center"><b>Ram widget widget</b></p>
 
 ---
 
