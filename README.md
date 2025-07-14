@@ -176,5 +176,5 @@ pip install .
 ---
 
 <p align="center">
-  <sub>© 2025 MEINE | Made with ❤️ by Balaji J | <a href="https://github.com/Balaji01-4D/meine/blob/master/LICENSE">MIT License</a></sub>
+  <sub>© 2025 MEINE | Made with 🌒  by Balaji J | <a href="https://github.com/Balaji01-4D/meine/blob/master/LICENSE">MIT License</a></sub>
 </p>
