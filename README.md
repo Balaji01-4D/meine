@@ -73,7 +73,7 @@
 </p>
 </details>
 
-<details>
+<details open>
 <summary><b>🖥️ System Utilities</b></summary>
 <p align="center">
   <img src="https://github.com/Balaji01-4D/meine/blob/main/img/widgets/system_info.png" alt="System widget" width="80%">
