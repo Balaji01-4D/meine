@@ -11,6 +11,8 @@
 
 <img alt="Meine Demo" src="img/intro.gif" width="80%" />
 <img alt="Widgets Demo" src="img/widgets.gif" width="80%" />
+<img alt="Widgets Demo windows" src="img/window_utils_live.gif" width="80%" />
+
 
 
 <i>Loved the project? Please consider <a href="https://ko-fi.com/balaji01">donating</a> to help it improve!</i>
@@ -75,13 +77,13 @@
 <p align="center"><b>Battery widget</b></p>
 
 <p align="center">
-  <img src="https://github.com/Balaji01-4D/meine/blob/main/img/widgets/ram_widget.png" alt="RAM widget" width="80%">
+  <img src="https://github.com/Balaji01-4D/meine/blob/main/img/widgets/ram.png" alt="RAM widget" width="80%">
 </p>
 
 <p align="center"><b>RAM widget</b></p>
 
 <p align="center">
-  <img src="https://github.com/Balaji01-4D/meine/blob/main/img/widgets/cpu_info.png" alt="CPU widget" width="80%">
+  <img src="https://github.com/Balaji01-4D/meine/blob/main/img/widgets/cpu.png" alt="CPU widget" width="80%">
 </p>
 
 <p align="center"><b>CPU widget</b></p>
