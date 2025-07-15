@@ -166,8 +166,8 @@ class System:
             accent = self.safe_style("accent")
             foreground = self.safe_style("foreground")
 
-            memory = await asyncio.to_thread(psutil.virtual_memory)
-            swap = await asyncio.to_thread(psutil.swap_memory)
+            memory = psutil.virtual_memory()
+            swap = psutil.swap_memory()
 
             total = memory.total
             available = memory.available
