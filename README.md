@@ -34,35 +34,35 @@
 </div>
 
 
-## 🚀 Features
+## Features
 
-- **🔍 Regex-Based Command Parsing**  
+- **Regex-Based Command Parsing**  
   Use intuitive commands to delete, copy, move, rename, search, and create files or folders.
 
-- **🗂️ TUI Directory Navigator**  
+- **TUI Directory Navigator**  
   Browse your filesystem in a reactive terminal UI—keyboard and mouse supported.
 
-- **💬 Live Command Console**  
+- **Live Command Console**  
   A built-in shell for interpreting commands and reflecting state changes in real time.
 
-- **⚡ Asynchronous & Modular**  
+- **Asynchronous & Modular**  
   Built with `asyncio`, `aiofiles`, `py7zr`, and modular architecture for responsive performance.
 
-- **🎨 Theming & Config**  
+- **Theming & Config**  
   CSS-powered themes, JSON-based user preferences, and dynamic runtime settings.
 
-- **📊 System Dashboard**  
+- **System Dashboard**  
   Real-time system insights via one-liner commands:
   `cpu`, `ram`, `battery`, `ip`, `user`, `env`, and more.
 
-- **🧩 Plugin Ready**  
+- **Plugin Ready**  
   Drop in your own Python modules to extend functionality without altering core logic.
 
 ---
-## 📸 Screenshots
+## Screenshots
 
 <details open>
-<summary><b>📱 Main Interface</b></summary>
+<summary><b>Main Interface</b></summary>
 <p align="center">
   <img src="https://github.com/Balaji01-4D/meine/blob/main/img/new1.png" alt="Input shell" width="45%" hspace="10">
   <img src="https://github.com/Balaji01-4D/meine/blob/main/img/widgets/settinng_screen.png" alt="Settings screen" width="45%" hspace="10">
@@ -74,7 +74,7 @@
 </details>
 
 <details open>
-<summary><b>🖥️ System Utilities</b></summary>
+<summary><b>System Utilities</b></summary>
 <p align="center">
   <img src="https://github.com/Balaji01-4D/meine/blob/main/img/widgets/system_info.png" alt="System widget" width="80%">
 </p>
@@ -89,7 +89,7 @@
 </details>
 
 <details>
-<summary><b>📊 Hardware Monitoring</b></summary>
+<summary><b>Hardware Monitoring</b></summary>
 <p align="center">
   <img src="https://github.com/Balaji01-4D/meine/blob/main/img/widgets/battery_updated.png" alt="Battery widget" width="80%">
 </p>
@@ -111,10 +111,10 @@
 
 ---
 
-## 🛠️ Installation
+## Installation
 
 <details open>
-<summary><b>📦 Quick Install</b></summary>
+<summary><b>Quick Install</b></summary>
 
 **Install via pip**
 > Requires Python 3.10+
@@ -125,7 +125,7 @@ pip install meine
 </details>
 
 <details>
-<summary><b>🔧 From Source</b></summary>
+<summary><b>From Source</b></summary>
 
 ```bash
 git clone https://github.com/Balaji01-4D/meine
@@ -136,7 +136,7 @@ pip install .
 
 ---
 
-## 🔤 Regex-Based Commands
+## Regex-Based Commands
 
 <table>
 <thead>
