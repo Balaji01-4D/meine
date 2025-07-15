@@ -821,8 +821,6 @@ _)      \\.___.,|     .'
             cpu_tasks = [
                 asyncio.to_thread(psutil.cpu_percent, interval=0.5),
                 asyncio.to_thread(psutil.cpu_percent, interval=0.5, percpu=True),
-                asyncio.to_thread(psutil.cpu_count, logical=False),
-                asyncio.to_thread(psutil.cpu_count, logical=True),
             ]
 
             if platform.system() != "Windows":
@@ -833,8 +831,8 @@ _)      \\.___.,|     .'
 
             overall_usage = results[0]
             per_cpu = results[1]
-            cpu_count_physical = results[2]
-            cpu_count_logical = results[3]
+            cpu_count_physical = psutil.cpu_count(logical=False)
+            cpu_count_logical = psutil.cpu_count(logical=True)
 
             cpu_freq = psutil.cpu_freq()
 
