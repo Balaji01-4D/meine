@@ -69,16 +69,9 @@ class System:
             accent = self._theme_colors["accent"]
             foreground = self._theme_colors["foreground"]
 
-            tasks = [
-                asyncio.to_thread(socket.gethostname),
-                asyncio.to_thread(psutil.net_if_addrs),
-                asyncio.to_thread(socket.getfqdn),
-            ]
-
-            results = await asyncio.gather(*tasks)
-            hostname = results[0]
-            net_if_addrs = results[1]
-            fqdn = results[2]
+            hostname = socket.gethostname()
+            net_if_addrs = psutil.net_if_addrs()
+            fqdn = await asyncio.to_thread(socket.getfqdn)
 
             ip_address_task = asyncio.to_thread(socket.gethostbyname, hostname)
             ip_address = await ip_address_task
@@ -272,22 +265,12 @@ class System:
             foreground = self.safe_style("foreground")
             error = self.safe_style("error")
 
-            tasks = [
-                asyncio.to_thread(psutil.cpu_percent, 1),
-                asyncio.to_thread(psutil.virtual_memory),
-                asyncio.to_thread(psutil.boot_time),
-                asyncio.to_thread(psutil.disk_usage, "/"),
-                asyncio.to_thread(psutil.users),
-                asyncio.to_thread(psutil.cpu_freq),
-            ]
-
-            results = await asyncio.gather(*tasks)
-            cpu_percent = results[0]
-            memory = results[1]
-            boot_time = results[2]
-            disk_usage = results[3]
-            users = results[4]
-            cpu_freq = results[5]
+            cpu_percent = asyncio.to_thread(psutil.cpu_percent, 1)
+            memory = psutil.virtual_memory()
+            boot_time = psutil.boot_time()
+            disk_usage = psutil.disk_usage("/")
+            users = await asyncio.to_thread(psutil.users)
+            cpu_freq = psutil.cpu_freq()
 
             os_art = ""
             os_name = platform.system()
