@@ -145,9 +145,8 @@ class System:
             net_info.add_row("  IPv6 Addresses", str(ipv6_count), style=foreground)
             net_info.add_row("  Hardware Addresses", str(hw_count), style=foreground)
 
-            localhost_info = await asyncio.to_thread(
-                socket.gethostbyname_ex, "localhost"
-            )
+            localhost_info = socket.gethostbyname_ex("localhost")
+            
             if localhost_info and len(localhost_info) > 2:
                 net_info.add_row("", "", style=foreground)
                 net_info.add_row(
@@ -999,79 +998,67 @@ _)      \\.___.,|     .'
 
     async def USER(self) -> Panel:
         try:
-            import getpass
-            import pwd
-
-            primary = self.safe_style("primary")
-            accent = self.safe_style("accent")
-            foreground = self.safe_style("foreground")
-
-            username = getpass.getuser()
-
-            user_table = Table(show_header=False, show_lines=True, border_style=primary)
-            user_table.add_column("Property", style=primary)
-            user_table.add_column("Value", style=foreground)
-
-            user_table.add_row("Username", username)
-
-            try:
-
-                user_info = pwd.getpwnam(username)
-                user_table.add_row("User ID", str(user_info.pw_uid))
-                user_table.add_row("Group ID", str(user_info.pw_gid))
-                user_table.add_row("Home Directory", user_info.pw_dir)
-                user_table.add_row("Shell", user_info.pw_shell)
-                user_table.add_row("Full Name", user_info.pw_gecos.split(",")[0])
-            except:
-
-                pass
-
-            try:
-
-                if self.os_type == "Linux":
-                    users = await asyncio.to_thread(psutil.users)
-                    for user in users:
-                        if user.name == username:
-                            user_table.add_row("Terminal", user.terminal)
-                            user_table.add_row(
-                                "Host",
-                                user.host if hasattr(user, "host") else "localhost",
-                            )
-                            if hasattr(user, "started"):
-                                user_table.add_row("Login Time", ctime(user.started))
-                            break
-            except:
-                pass
-
-            try:
-                import grp
-
-                groups = [g.gr_name for g in grp.getgrall() if username in g.gr_mem]
-                main_group = grp.getgrgid(pwd.getpwnam(username).pw_gid).gr_name
-                if main_group not in groups:
-                    groups.append(main_group)
-                user_table.add_row("Groups", ", ".join(groups))
-            except:
-                pass
-
-            user_env_vars = {}
-            for key, value in os.environ.items():
-                if any(k in key.lower() for k in ["user", "home", "logname", "path"]):
-                    user_env_vars[key] = value
-
-            if user_env_vars:
-                for key, value in user_env_vars.items():
-                    if key in ["USER", "HOME", "LOGNAME", "PATH"]:
-                        user_table.add_row(f"Env: {key}", value)
-
-            return Panel(
-                user_table, title=f"[{accent}]User Information", border_style=primary
-            )
+            if self.os_type in ["Linux", "Darwin"]:
+                return await self._get_user_info_unix()
+            else:
+                return await self._get_user_info_windows()
         except Exception as e:
             return Panel(
                 f"Error getting user information: {e}",
                 border_style=self.safe_style("error"),
             )
+    
+    async def _get_user_info_unix(self) -> Panel:
+        import getpass, os, pwd, grp, psutil
+        from time import ctime
+
+        primary = self.safe_style("primary")
+        accent = self.safe_style("accent")
+        foreground = self.safe_style("foreground")
+
+        username = getpass.getuser()
+        user_info = pwd.getpwnam(username)
+
+        user_table = Table(show_header=False, show_lines=True, border_style=primary)
+        user_table.add_column("Property", style=primary)
+        user_table.add_column("Value", style=foreground)
+
+        user_table.add_row("Username", username)
+        user_table.add_row("User ID", str(user_info.pw_uid))
+        user_table.add_row("Group ID", str(user_info.pw_gid))
+        user_table.add_row("Home Directory", user_info.pw_dir)
+        user_table.add_row("Shell", user_info.pw_shell)
+        user_table.add_row("Full Name", user_info.pw_gecos.split(",")[0])
+
+        try:
+            groups = [g.gr_name for g in grp.getgrall() if username in g.gr_mem]
+            main_group = grp.getgrgid(user_info.pw_gid).gr_name
+            if main_group not in groups:
+                groups.append(main_group)
+            user_table.add_row("Groups", ", ".join(groups))
+        except:
+            pass
+
+        try:
+            users = await asyncio.to_thread(psutil.users)
+            for user in users:
+                if user.name == username:
+                    user_table.add_row("Terminal", getattr(user, "terminal", "N/A"))
+                    user_table.add_row("Host", getattr(user, "host", "localhost"))
+                    if hasattr(user, "started"):
+                        user_table.add_row("Login Time", ctime(user.started))
+                    break
+        except:
+            pass
+
+        env_keys = ["USER", "USERNAME", "HOME", "LOGNAME", "PATH"]
+        for key in env_keys:
+            val = os.environ.get(key)
+            if val:
+                user_table.add_row(f"Env: {key}", val)
+
+        return Panel(user_table, title=f"[{accent}]User Information", border_style=primary)
+
 
     async def DiskInfo(self):
         try:
@@ -1204,6 +1191,47 @@ _)      \\.___.,|     .'
                 title="Disk Info Error",
                 border_style=self.safe_style("error"),
             )
+        
+    async def _get_user_info_windows(self) -> Panel:
+        import getpass, os, psutil
+        from time import ctime
+
+        primary = self.safe_style("primary")
+        accent = self.safe_style("accent")
+        foreground = self.safe_style("foreground")
+
+        username = getpass.getuser()
+
+        user_table = Table(show_header=False, show_lines=True, border_style=primary)
+        user_table.add_column("Property", style=primary)
+        user_table.add_column("Value", style=foreground)
+
+        user_table.add_row("Username", username)
+
+        env_keys = ["USER", "USERNAME", "USERPROFILE", "HOME", "LOGNAME", "PATH"]
+        for key in env_keys:
+            val = os.environ.get(key)
+            if val:
+                user_table.add_row(f"Env: {key}", val)
+
+        home_dir = os.path.expanduser("~")
+        if home_dir:
+            user_table.add_row("Home Directory", home_dir)
+
+        try:
+            users = await asyncio.to_thread(psutil.users)
+            for user in users:
+                if user.name == username:
+                    user_table.add_row("Terminal", getattr(user, "terminal", "N/A"))
+                    user_table.add_row("Host", getattr(user, "host", "localhost"))
+                    if hasattr(user, "started"):
+                        user_table.add_row("Login Time", ctime(user.started))
+                    break
+        except:
+            pass
+
+        return Panel(user_table, title=f"[{accent}]User Information", border_style=primary)
+
 
     async def Processes(self):
         try:
