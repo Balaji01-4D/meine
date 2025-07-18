@@ -265,7 +265,7 @@ class System:
             foreground = self.safe_style("foreground")
             error = self.safe_style("error")
 
-            cpu_percent = asyncio.to_thread(psutil.cpu_percent, 1)
+            cpu_percent = await asyncio.to_thread(psutil.cpu_percent, 1)
             memory = psutil.virtual_memory()
             boot_time = psutil.boot_time()
             disk_usage = psutil.disk_usage("/")

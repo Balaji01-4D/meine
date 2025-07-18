@@ -30,7 +30,7 @@ def main(version, quotes_reset, quotes_clear, quote_to_add, history_clear):
         click.echo("Quotes reset to default.")
 
     elif version:
-        click.echo("meine 2.0.0")
+        click.echo("meine 2.0.1")
 
     elif quotes_clear:
         quotes.clear()
