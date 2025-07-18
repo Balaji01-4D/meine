@@ -75,6 +75,15 @@ You can toggle the hidden folder view in settings using `Ctrl + S`.
 
 - `Ctrl + S` → Open the settings screen
 
+## System Utility Screen
+
+- `Ctrl + M` → Open the system utility screen
+
+::: info
+**Widget Selection:**
+The system utility screen provides access to system monitoring widgets through a dropdown menu. Use arrow keys to navigate and Enter to select widgets.
+:::
+
 ## Help Screen
 
 - `Ctrl + K` → Open the help screen
