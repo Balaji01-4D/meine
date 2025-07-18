@@ -1,7 +1,0 @@
-include LICENSE
-include SECURITY.md
-include README.Md
-include requirements.txt
-
-recursive-include meine/resources *.json
-recursive-include meine/tcss *.tcss
