@@ -18,7 +18,7 @@
 <a href="https://github.com/Balaji01-4D/meine/blob/master/LICENSE">
   <img src="https://img.shields.io/github/license/Balaji01-4D/meine?color=2b9348" alt="License Badge"/>
 </a>
-<img src="https://static.pepy.tech/badge/meine" alt="Downloads Badge"/>
+<img src="https://static.pepy.tech/badge/meine?color=2b9348" alt="Downloads Badge"/>
 
 <p>
   <img alt="Meine Demo" src="img/intro.gif" width="80%" />
