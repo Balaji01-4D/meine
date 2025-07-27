@@ -6,13 +6,19 @@
 </p>
 
 <div align="center">
-
-<a href="https://github.com/Balaji01-4D/meine/stargazers"><img src="https://img.shields.io/github/stars/Balaji01-4D/meine" alt="Stars Badge"/></a>
-<a href="https://github.com/Balaji01-4D/meine/network/members"><img src="https://img.shields.io/github/forks/Balaji01-4D/meine" alt="Forks Badge"/></a>
-<a href="https://github.com/Balaji01-4D/meine/pulls"><img src="https://img.shields.io/github/issues-pr/Balaji01-4D/meine" alt="Pull Requests Badge"/></a>
-<a href="https://github.com/Balaji01-4D/meine/issues"><img src="https://img.shields.io/github/issues/Balaji01-4D/meine" alt="Issues Badge"/></a>
-<a href="https://github.com/Balaji01-4D/meine/graphs/contributors"><img alt="GitHub contributors" src="https://img.shields.io/github/contributors/Balaji01-4D/meine?color=2b9348"></a>
-<a href="https://github.com/Balaji01-4D/meine/blob/master/LICENSE"><img src="https://img.shields.io/github/license/Balaji01-4D/meine?color=2b9348" alt="License Badge"/></a>
+<a href="https://github.com/Balaji01-4D/meine/stargazers">
+  <img src="https://img.shields.io/github/stars/Balaji01-4D/meine" alt="Stars Badge"/>
+</a>
+<a href="https://github.com/Balaji01-4D/meine/issues">
+  <img src="https://img.shields.io/github/issues/Balaji01-4D/meine" alt="Issues Badge"/>
+</a>
+<a href="https://github.com/Balaji01-4D/meine/graphs/contributors">
+  <img alt="GitHub contributors" src="https://img.shields.io/github/contributors/Balaji01-4D/meine?color=2b9348"/>
+</a>
+<a href="https://github.com/Balaji01-4D/meine/blob/master/LICENSE">
+  <img src="https://img.shields.io/github/license/Balaji01-4D/meine?color=2b9348" alt="License Badge"/>
+</a>
+<img src="https://static.pepy.tech/badge/meine" alt="Downloads Badge"/>
 
 <p>
   <img alt="Meine Demo" src="img/intro.gif" width="80%" />
