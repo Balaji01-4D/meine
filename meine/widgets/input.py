@@ -5,7 +5,9 @@ from re import search
 import platformdirs
 from textual.binding import Binding
 from textual.widgets import Input, DirectoryTree
+from textual.containers import Container 
 from textual.suggester import SuggestFromList
+from textual import log
 
 from meine.utils.file_manager import load_Path_expansion
 
@@ -86,8 +88,8 @@ class MeineInput(Input):
 
     def on_mount(self):
         self.directory_tree = self.screen.query_one(
-            "#directory-tree", expect_type=DirectoryTree
-        )
+            "#directory-tree-container", expect_type=Container
+        ).query_one("#directory-tree", expect_type=DirectoryTree)
 
     def _get_hint_text(self) -> tuple[list[str], str | None, str]:
         try:

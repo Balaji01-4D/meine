@@ -31,6 +31,9 @@ class HomeScreen(Screen):
         super().__init__(name, id, classes)
 
     def compose(self):
+        self.directory_tree_container = Directory_tree_container(
+            classes="-hidden", id="directory-tree-container"
+        )
         self.inputconsole = MeineInput(
             placeholder="Enter command.... [/ to jump here]",
             id="command-input",
@@ -39,36 +42,24 @@ class HomeScreen(Screen):
         )
         self.rich_log = RichLog(id="output", highlight=True)
 
-        self.directory_tree_container = Directory_tree_container(
-            classes="-hidden", id="directory-tree-container"
-        )
         self.directory_tree_container.styles.dock = self.app.SETTINGS[
             "directory-tree-dock"
         ]
 
         self.Dtree = self.directory_tree_container.dtree
-        self.bgprocess = Background_process_container(classes="-hidden")
         self.input_output_container = Container(
             self.inputconsole, self.rich_log, id="IO"
         )
 
         yield Header()
         with Container():
-            yield self.input_output_container
             yield self.directory_tree_container
-            yield self.bgprocess
+            yield self.input_output_container
 
     def _on_mount(self) -> None:
         self.title = load_random_quote()
 
-    def key_ctrl_b(self):
-        """
-        Handles the Ctrl+B key press event.
 
-        Toggles the visibility of the background process by switching the
-        "-hidden" class, which shows or hides the background process element.
-        """
-        self.bgprocess.toggle_class("-hidden")
 
     def handle_files_click_input(self, widget) -> None:
 
