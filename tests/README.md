@@ -5,7 +5,7 @@
 Before running tests, ensure you have the required dependencies installed:
 
 ```bash
-pip install pytest pytest-asyncio pytest-textual-snapshot
+uv pip install pytest pytest-asyncio
 ```
 
 ## Running Basic Tests
@@ -13,58 +13,56 @@ pip install pytest pytest-asyncio pytest-textual-snapshot
 To run all the tests:
 
 ```bash
-pytest
+uv run pytest
 ```
 
 To run a specific test file:
 
 ```bash
-pytest tests/test_meine_app.py
+uv run pytest tests/test_meine_app.py
 ```
 
-## Running Snapshot Tests
+## Minimal Atomic Test Levels
 
-Snapshot tests compare the visual output of your application against saved snapshots.
+These files are designed for commit-by-level progress:
 
-When running for the first time, the tests will fail because there are no saved snapshots:
+- Level 1: `tests/test_level1_smoke.py`
+- Level 2: `tests/test_level2_navigation_keys.py`
+- Level 3: `tests/test_level3_home_interactions.py`
 
-```bash
-pytest tests/test_meine_snapshot.py
-```
-
-After reviewing the generated snapshots in the browser (follow the link provided in the output), update the snapshots by running:
+Run and commit each level independently:
 
 ```bash
-pytest --snapshot-update
-```
+uv run pytest -q tests/test_level1_smoke.py
+git add tests/test_level1_smoke.py
+git commit -m "tests: add level 1 smoke coverage"
 
-This will save the current snapshots as the "ground truth" for future comparisons.
+uv run pytest -q tests/test_level2_navigation_keys.py
+git add tests/test_level2_navigation_keys.py
+git commit -m "tests: add level 2 navigation key coverage"
 
-Future test runs will compare against these saved snapshots:
-
-```bash
-pytest tests/test_meine_snapshot.py
+uv run pytest -q tests/test_level3_home_interactions.py
+git add tests/test_level3_home_interactions.py
+git commit -m "tests: add level 3 home interaction coverage"
 ```
 
 ## Understanding Test Failures
 
-If a snapshot test fails after updating the app:
+If a test fails after updates:
 
-1. Run `pytest` without the `--snapshot-update` flag
-2. Open the HTML report (link will be in the test output)
-3. Compare the current output with the saved snapshot
-4. If the changes are intentional, run `pytest --snapshot-update` to update the snapshots
-5. If the changes are unintentional, fix the code and run tests again
+1. Re-run the failing file only: `uv run pytest -q tests/<file>.py`
+2. Inspect the assertion and trace to confirm whether behavior changed intentionally
+3. If the change is intentional, update or replace the affected test with a reliable assertion
+4. If the change is unintentional, fix the app code and re-run `uv run pytest -q`
 
 ## Test Organization
 
 We have multiple test files using different approaches to test the app:
 
 - `test_meine_app.py`: Basic functionality tests using direct app initialization
-- `test_meine_snapshot.py`: Visual snapshot tests for different screens and states
-- `test_direct_app.py`: Alternative approach to snapshot testing
 - `test_functional.py`: Class-based functional tests without snapshots
 - `test_fixture_based.py`: Tests using pytest fixtures for app initialization
+- `test_level1_smoke.py`, `test_level2_navigation_keys.py`, `test_level3_home_interactions.py`: Atomic, commit-by-level reliable tests
 
 If you encounter issues with one testing approach, try another. The fixture-based approach (`test_fixture_based.py`) is often the most reliable for functional testing.
 
@@ -90,21 +88,16 @@ If you encounter issues with running tests:
 
 1. Ensure all dependencies are installed
 2. Check that you're running Python 3.11+ (required by the app)
-3. Verify that the app can run normally with `python run.py`
+3. Verify that the app can run normally with `uv run meine`
 4. If tests are failing due to timing issues, you may need to increase the `pause()` durations in the tests
 
 ### Common Issues
 
-1. **"Unable to find app in run.py"**: 
-   - This happens because the pytest-textual-snapshot is looking for an app instance in run.py
-   - Our solution is to use absolute paths to run.py instead of relative paths
-
-2. **"No nodes match '#command-input'"**:
+1. **"No nodes match '#command-input'"**:
    - This happens when the app hasn't fully initialized before we try to access elements
    - We've added `await pilot.pause(0.5)` to give the app time to initialize
    - If you still see this error, try increasing the pause duration
 
-3. **"asyncio.run() cannot be called from a running event loop"**:
-   - This happens when trying to use `snap_compare` with a direct app instance inside an `@pytest.mark.asyncio` test
-   - The solution is to use the path to run.py instead of directly passing the app instance
-   - Alternatively, use the `test_functional.py` tests which focus on functional testing rather than snapshot testing
+2. **Flaky key shortcuts in focused inputs**:
+   - Some Ctrl shortcuts can be consumed by the focused input widget in headless tests
+   - Prefer stable interaction patterns (screen handlers or non-conflicting keys) when assertions are flaky

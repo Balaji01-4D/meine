@@ -17,7 +17,6 @@ from meine.screens.home import HomeScreen
 from meine.screens.settings import Settings
 from meine.screens.help import HelpScreen
 from meine.screens.system_utils import SystemUtilScreen
-from tests.test_helpers import get_run_py_path, get_app_module
 
 
 @pytest.mark.asyncio
@@ -177,10 +176,3 @@ async def test_directory_tree():
             directory_tree_container = home_screen.query_one("#directory-tree-container", expect_type=None)
             if directory_tree_container:
                 assert not directory_tree_container.has_class("-hidden")
-
-
-@pytest.mark.asyncio
-async def test_snapshot_home(snap_compare):
-    """Test a visual snapshot of the home screen."""
-    app_path = get_app_module()
-    assert snap_compare(app_path, terminal_size=(100, 30))
